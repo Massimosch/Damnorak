@@ -1,0 +1,31 @@
+using UnityEngine;
+using System.Collections.Generic;
+
+public static class LevelSettings
+{
+    public static float height = 500;
+    public static float width = 500;
+    public static float scale = 1f;
+    public static float iconScale = 0.1f;
+    public static float padding = 0.01f;
+
+    public static float roomGenerationChance = 0.5f;
+    
+    public static Sprite TreasureRoomIcon;
+    public static Sprite BossRoomIcon;
+    public static Sprite ShopRoomIcon;
+    public static Sprite UnexploredRoomIcon;
+    public static Sprite DefaultRoomIcon;
+    public static Sprite CurrentRoomIcon;
+
+    public static List<Room> rooms = new List<Room>();
+    public static Room currentRoom;
+}
+
+public class Room
+{
+    public int roomNumber = 0;
+    public int levelNumber = 0;
+    public Vector2 Location;
+    public Sprite roomImage;
+}

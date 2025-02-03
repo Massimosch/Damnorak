@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6802953341130024849}
   - component: {fileID: 6070924679525373841}
   - component: {fileID: 3216172556269566412}
+  - component: {fileID: 2896634761985898141}
   m_Layer: 3
   m_Name: DefaultAttackPrefab
   m_TagString: Untagged
@@ -137,3 +138,15 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &2896634761985898141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8660777835674394681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d0f5490360c7154687d7dc84626ea72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

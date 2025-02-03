@@ -11,7 +11,8 @@ public class PlayerAttack : MonoBehaviour
     public void Attack()
     {
         GameObject projectile = Instantiate(PlayerSettings.Attack, transform.position + transform.forward * 5, Quaternion.identity);
-        projectile.GetComponent<Rigidbody>().linearVelocity = transform.position + transform.forward * 5;
+        projectile.GetComponent<Rigidbody>().linearVelocity = transform.position + transform.forward * PlayerSettings.AttackSpeed;
+        GameObject.Destroy(projectile, 5);
     }
 
     void Update()
