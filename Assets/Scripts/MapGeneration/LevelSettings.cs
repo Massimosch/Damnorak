@@ -25,7 +25,7 @@ public static class LevelSettings
 
 public class Room
 {
-    public int roomNumber = 0;
+    public int roomNumber = 6;
     public int levelNumber = 0;
     public Vector2 Location;
     public Sprite roomImage;
