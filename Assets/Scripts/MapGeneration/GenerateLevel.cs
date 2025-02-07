@@ -27,8 +27,10 @@ public class GenerateLevel : MonoBehaviour
     {
         Room StartRoom = new Room();
         StartRoom.Location = new Vector2(0, 0);
-        StartRoom.roomImage = LevelSettings.CurrentRoomIcon;
+        StartRoom.roomSprite = LevelSettings.CurrentRoomIcon;
         StartRoom.roomNumber = 0;
+
+        PlayerSettings.currentRoom = StartRoom;
 
 
         //Start room
@@ -38,7 +40,7 @@ public class GenerateLevel : MonoBehaviour
         {
             Room newRoom = new Room();
             newRoom.Location = new Vector2(-1, 0);
-            newRoom.roomImage = LevelSettings.DefaultRoomIcon;
+            newRoom.roomSprite = LevelSettings.DefaultRoomIcon;
             newRoom.roomNumber = RandomRoomNumber();
             if(!CheckIfRoomExists(newRoom.Location))
             {
@@ -53,7 +55,7 @@ public class GenerateLevel : MonoBehaviour
         {
             Room newRoom = new Room();
             newRoom.Location = new Vector2(1, 0);
-            newRoom.roomImage = LevelSettings.DefaultRoomIcon;
+            newRoom.roomSprite = LevelSettings.DefaultRoomIcon;
             newRoom.roomNumber = RandomRoomNumber();
             if(!CheckIfRoomExists(newRoom.Location))
             {
@@ -68,7 +70,7 @@ public class GenerateLevel : MonoBehaviour
         {
             Room newRoom = new Room();
             newRoom.Location = new Vector2(0, 1);
-            newRoom.roomImage = LevelSettings.DefaultRoomIcon;
+            newRoom.roomSprite = LevelSettings.DefaultRoomIcon;
             newRoom.roomNumber = RandomRoomNumber();
             if(!CheckIfRoomExists(newRoom.Location))
             {
@@ -83,7 +85,7 @@ public class GenerateLevel : MonoBehaviour
         {
             Room newRoom = new Room();
             newRoom.Location = new Vector2(0, -1);
-            newRoom.roomImage = LevelSettings.DefaultRoomIcon;
+            newRoom.roomSprite = LevelSettings.DefaultRoomIcon;
             newRoom.roomNumber = RandomRoomNumber();
             if(!CheckIfRoomExists(newRoom.Location))
             {
@@ -144,7 +146,7 @@ public class GenerateLevel : MonoBehaviour
 
     int RandomRoomNumber()
     {
-        return 6;
+        return Random.Range(6, GameObject.Find("Rooms").transform.childCount);
     }
 
     void StopRegenerating()
@@ -216,7 +218,7 @@ public class GenerateLevel : MonoBehaviour
         {
             Room newRoom = new Room();
             newRoom.Location = new Vector2(-1, 0) + room.Location;
-            newRoom.roomImage = LevelSettings.DefaultRoomIcon;
+            newRoom.roomSprite = LevelSettings.DefaultRoomIcon;
             newRoom.roomNumber = RandomRoomNumber();
 
             if(!CheckIfRoomExists(newRoom.Location))
@@ -233,7 +235,7 @@ public class GenerateLevel : MonoBehaviour
         {
             Room newRoom = new Room();
             newRoom.Location = new Vector2(1, 0) + room.Location;
-            newRoom.roomImage = LevelSettings.DefaultRoomIcon;
+            newRoom.roomSprite = LevelSettings.DefaultRoomIcon;
             
             if(!CheckIfRoomExists(newRoom.Location))
             {
@@ -249,7 +251,7 @@ public class GenerateLevel : MonoBehaviour
         {
             Room newRoom = new Room();
             newRoom.Location = new Vector2(0, 1) + room.Location;
-            newRoom.roomImage = LevelSettings.DefaultRoomIcon;
+            newRoom.roomSprite = LevelSettings.DefaultRoomIcon;
             
             if(!CheckIfRoomExists(newRoom.Location))
             {
@@ -265,7 +267,7 @@ public class GenerateLevel : MonoBehaviour
         {
             Room newRoom = new Room();
             newRoom.Location = new Vector2(0, -1) + room.Location;
-            newRoom.roomImage = LevelSettings.DefaultRoomIcon;
+            newRoom.roomSprite = LevelSettings.DefaultRoomIcon;
             
             if(!CheckIfRoomExists(newRoom.Location))
             {
@@ -294,7 +296,7 @@ public class GenerateLevel : MonoBehaviour
         }
 
         Room BossRoom = new Room();
-        BossRoom.roomImage = LevelSettings.BossRoomIcon;
+        BossRoom.roomSprite = LevelSettings.BossRoomIcon;
         BossRoom.roomNumber = 1;
 
         Vector2[] directions = { new Vector2(-1, 0), new Vector2(1, 0), new Vector2(0, 1), new Vector2(0, -1) };
@@ -348,7 +350,7 @@ public class GenerateLevel : MonoBehaviour
         List<Room> ShuffledList = new List<Room>(LevelSettings.rooms);
 
         Room SpecialRoom = new Room();
-        SpecialRoom.roomImage = MapIcon;
+        SpecialRoom.roomSprite = MapIcon;
         SpecialRoom.roomNumber = RoomNumber;
         bool FoundAvailableLocation = false;
 
@@ -413,7 +415,8 @@ public class GenerateLevel : MonoBehaviour
         if(room.roomNumber == 3) TileName = "ItemRoomTile";
         GameObject MapTile = new GameObject(TileName);
         Image RoomImage = MapTile.AddComponent<Image>();
-        RoomImage.sprite = room.roomImage;
+        RoomImage.sprite = room.roomSprite;
+        room.roomImage = RoomImage;
         RectTransform rectTransform = RoomImage.GetComponent<RectTransform>();
         rectTransform.sizeDelta = new Vector2(LevelSettings.height, LevelSettings.width) * LevelSettings.iconScale;
         rectTransform.position = room.Location * (LevelSettings.iconScale * LevelSettings.height * LevelSettings.scale + (LevelSettings.padding * LevelSettings.height * LevelSettings.scale));
