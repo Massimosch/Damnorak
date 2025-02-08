@@ -4,6 +4,8 @@ public class PlayerAttack : MonoBehaviour
 {
     private bool isAttacking = false;  // Tarkistaa, onko pelaaja hyökkäämässä
     private bool canAttack = true;  // Tarkistaa, voiko pelaaja hyökätä
+    public float projectileSpeed = 10f;
+
 
     void Update()
     {
@@ -51,30 +53,23 @@ public class PlayerAttack : MonoBehaviour
     {
         // Luodaan ammus oikeassa paikassa, ja asetetaan alkuperäinen rotatio suoraan eteenpäin
         GameObject projectile = Instantiate(PlayerSettings.Attack, transform.position + transform.forward * 2f + transform.up * 1.5f, Quaternion.identity);  // Siirretään vielä enemmän eteen ja ylöspäin
-        
+
         // Hakee Rigidbody-komponentin ammuksesta
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
 
         if (rb != null)
         {
             // Asetetaan ammuksen nopeus
-            Vector3 attackDirection = transform.forward * PlayerSettings.AttackSpeed;
+            Vector3 attackDirection = transform.forward * projectileSpeed;  // Käytetään säädettyä nopeutta
 
             // Käytetään linearVelocitya liikkumiseen
             rb.linearVelocity = attackDirection;
-
-            // Debug-tulostus suunnasta
-            Debug.Log("Projectile Rigidbody Forward Direction: " + rb.linearVelocity);
 
             // Piirretään viiva ammuksen suunnassa pelaajan edessä (1 sekunnin ajaksi)
             Debug.DrawRay(projectile.transform.position, attackDirection * 5f, Color.red, 1f);
 
             // Asetetaan ammuksen rotatio (niin että se lentää oikeaan suuntaan)
             projectile.transform.rotation = Quaternion.LookRotation(attackDirection);
-        }
-        else
-        {
-            Debug.LogError("Projectile does not have a Rigidbody component!");
         }
 
         // Ammus tuhoutuu 5 sekunnin kuluttua
