@@ -27,7 +27,10 @@ public class PlayerMovement : MonoBehaviour
 
     void PlayerMoving(float horizontalAxis, float verticalAxis)
     {
-        if ((horizontalAxis != 0 || verticalAxis != 0) && PlayerSettings.State == "Idle")
+        // Luo liikevektori (ei muuta y-koordinaattia)
+        Vector3 move = new Vector3(horizontalAxis, 0, verticalAxis) * moveSpeed;
+
+        if (horizontalAxis != 0 || verticalAxis != 0)
         {
             PlayerSettings.animator.SetFloat("Speed", 1);
         }
@@ -36,9 +39,14 @@ public class PlayerMovement : MonoBehaviour
             PlayerSettings.animator.SetFloat("Speed", 0);
         }
 
-        Vector3 Move = new Vector3(horizontalAxis, 0, verticalAxis) * moveSpeed;
-        controller.Move(Move);
+        // Pakotetaan y-koordinaatti pysymään nollassa
+        move.y = 0f;
+
+        // Liikuta pelaajaa
+        controller.Move(move);
     }
+
+
 
     void PlayerRotating()
     {
