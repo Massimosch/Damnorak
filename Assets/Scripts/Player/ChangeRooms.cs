@@ -87,113 +87,105 @@ public class ChangeRooms : MonoBehaviour
 
         if(hit.gameObject.name == "LeftDoor")
         {
-            //where are we
-            Vector2 Location = PlayerSettings.currentRoom.Location;
-
-            //where are we going
-            Location += new Vector2(-1, 0);
-
-            if(LevelSettings.rooms.Exists(x => x.Location == Location))
-            {
-                Room R = LevelSettings.rooms.First(x => x.Location == Location);
-                //disable the room that you were in
-                Rooms.Find(PlayerSettings.currentRoom.roomNumber.ToString()).gameObject.SetActive(false);
-                //find the new room and activate it
-                GameObject NewRoom = Rooms.Find(R.roomNumber.ToString()).gameObject;
-                NewRoom.SetActive(true);
-                //move the player
-                PlayerSettings.Controller.enabled = false;
-                PlayerSettings.transform.position = NewRoom.transform.Find("Doors").transform.Find("RightDoor").position + new Vector3(-RoomSpawnOffSet, 0, 0);
-                PlayerSettings.Controller.enabled = true;
-
-                ChangeRoomIcon(PlayerSettings.currentRoom, R);
-                PlayerSettings.currentRoom = R;
-                EnableDoors(R);
-            }
+            CheckDoor(new Vector2(-1, 0), "RightDoor", new Vector3(-RoomSpawnOffSet, 0, 0));
         }
 
-        if(hit.gameObject.name == "RightDoor")
+        if (hit.gameObject.name == "RightDoor")
         {
-            //where are we
-            Vector2 Location = PlayerSettings.currentRoom.Location;
-
-            //where are we going
-            Location += new Vector2(1, 0);
-
-            if(LevelSettings.rooms.Exists(x => x.Location == Location))
-            {
-                Room R = LevelSettings.rooms.First(x => x.Location == Location);
-                //disable the room that you were in
-                Rooms.Find(PlayerSettings.currentRoom.roomNumber.ToString()).gameObject.SetActive(false);
-                //find the new room and activate it
-                GameObject NewRoom = Rooms.Find(R.roomNumber.ToString()).gameObject;
-                NewRoom.SetActive(true);
-                //move the player
-                PlayerSettings.Controller.enabled = false;
-                PlayerSettings.transform.position = NewRoom.transform.Find("Doors").transform.Find("LeftDoor").position + new Vector3(RoomSpawnOffSet, 0, 0);
-                PlayerSettings.Controller.enabled = true;
-
-                ChangeRoomIcon(PlayerSettings.currentRoom, R);
-                PlayerSettings.currentRoom = R;
-                EnableDoors(R);
-            }
+            CheckDoor(new Vector2(1, 0), "LeftDoor", new Vector3(RoomSpawnOffSet, 0, 0));
         }
 
         if(hit.gameObject.name == "TopDoor")
         {
-            //where are we
-            Vector2 Location = PlayerSettings.currentRoom.Location;
-
-            //where are we going
-            Location += new Vector2(0, 1);
-
-            if(LevelSettings.rooms.Exists(x => x.Location == Location))
-            {
-                Room R = LevelSettings.rooms.First(x => x.Location == Location);
-                //disable the room that you were in
-                Rooms.Find(PlayerSettings.currentRoom.roomNumber.ToString()).gameObject.SetActive(false);
-                //find the new room and activate it
-                GameObject NewRoom = Rooms.Find(R.roomNumber.ToString()).gameObject;
-                NewRoom.SetActive(true);
-                //move the player
-                PlayerSettings.Controller.enabled = false;
-                PlayerSettings.transform.position = NewRoom.transform.Find("Doors").transform.Find("BottomDoor").position + new Vector3(0, 0, RoomSpawnOffSet);
-                PlayerSettings.Controller.enabled = true;
-
-                ChangeRoomIcon(PlayerSettings.currentRoom, R);
-                PlayerSettings.currentRoom = R;
-                EnableDoors(R);
-            }
+            CheckDoor(new Vector2(0, 1), "BottomDoor", new Vector3(0, 0, RoomSpawnOffSet));
         }
 
         if(hit.gameObject.name == "BottomDoor")
         {
-            //where are we
-            Vector2 Location = PlayerSettings.currentRoom.Location;
+            CheckDoor(new Vector2(0, -1), "TopDoor", new Vector3(0, 0, -RoomSpawnOffSet));
+        }
+    }
 
-            //where are we going
-            Location += new Vector2(0, -1);
-
-            if(LevelSettings.rooms.Exists(x => x.Location == Location))
+    public static void ReDrawRevealedRooms()
+    {
+        foreach (Room room in LevelSettings.rooms)
+        {
+            if(!room.revealedRoom && !room.exploredRoom)
             {
-                Room R = LevelSettings.rooms.First(x => x.Location == Location);
-                //disable the room that you were in
-                Rooms.Find(PlayerSettings.currentRoom.roomNumber.ToString()).gameObject.SetActive(false);
-                //find the new room and activate it
-                GameObject NewRoom = Rooms.Find(R.roomNumber.ToString()).gameObject;
-                NewRoom.SetActive(true);
-                //move the player
-                PlayerSettings.Controller.enabled = false;
-                PlayerSettings.transform.position = NewRoom.transform.Find("Doors").transform.Find("TopDoor").position + new Vector3(0, 0, -RoomSpawnOffSet);
-                PlayerSettings.Controller.enabled = true;
+                room.roomImage.color = new Color(1, 1, 1, 0);
+            }
+            if(room.revealedRoom && !room.exploredRoom && room.roomNumber > 5)
+            {
+                room.roomImage.sprite = LevelSettings.UnexploredRoomIcon;
+            }
+            if(room.exploredRoom && room.roomNumber > 5)
+            {
+                room.roomImage.sprite = LevelSettings.DefaultRoomIcon;
+            }
+            if(room.exploredRoom || room.revealedRoom)
+            {
+                room.roomImage.color = new Color(1, 1, 1, 1);
+            }
 
-                ChangeRoomIcon(PlayerSettings.currentRoom, R);
-                PlayerSettings.currentRoom = R;
-                EnableDoors(R);
+            PlayerSettings.currentRoom.roomSprite = LevelSettings.CurrentRoomIcon;
+        }
+    }
+
+    public static void RevealRooms(Room R)
+    {
+        foreach(Room room in LevelSettings.rooms)
+        {
+            if(room.Location == R.Location + new Vector2(-1,0))
+            {
+                room.revealedRoom = true;
+            }
+
+            if(room.Location == R.Location + new Vector2(1,0))
+            {
+                room.revealedRoom = true;
+            }
+
+            if(room.Location == R.Location + new Vector2(0,1))
+            {
+                room.revealedRoom = true;
+            }
+
+            if(room.Location == R.Location + new Vector2(0,-1))
+            {
+                room.revealedRoom = true;
             }
         }
+    }
 
+    void CheckDoor(Vector2 NewLocation, string Direction, Vector3 RoomOffset)
+    {
+        //where are we
+        Vector2 Location = PlayerSettings.currentRoom.Location;
 
+        //where are we going
+        Location += NewLocation;
 
+        if (LevelSettings.rooms.Exists(x => x.Location == Location))
+        {
+            Room R = LevelSettings.rooms.First(x => x.Location == Location);
+            //disable the room that you were in
+            Rooms.Find(PlayerSettings.currentRoom.roomNumber.ToString()).gameObject.SetActive(false);
+            //find the new room and activate it
+            GameObject NewRoom = Rooms.Find(R.roomNumber.ToString()).gameObject;
+            NewRoom.SetActive(true);
+            //move the player
+            PlayerSettings.Controller.enabled = false;
+            PlayerSettings.transform.position = NewRoom.transform.Find("Doors").transform.Find(Direction).position + RoomOffset;
+            PlayerSettings.Controller.enabled = true;
+
+            ChangeRoomIcon(PlayerSettings.currentRoom, R);
+            PlayerSettings.currentRoom = R;
+            EnableDoors(R);
+
+            PlayerSettings.currentRoom.exploredRoom = true;
+
+            RevealRooms(R);
+            ReDrawRevealedRooms();
+        }
     }
 }

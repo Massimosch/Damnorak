@@ -33,4 +33,6 @@ public class Room
     public Vector2 Location;
     public Image roomImage;
     public Sprite roomSprite;
+    public bool revealedRoom;
+    public bool exploredRoom;
 }

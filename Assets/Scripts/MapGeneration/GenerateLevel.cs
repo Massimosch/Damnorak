@@ -28,6 +28,8 @@ public class GenerateLevel : MonoBehaviour
         Room StartRoom = new Room();
         StartRoom.Location = new Vector2(0, 0);
         StartRoom.roomSprite = LevelSettings.CurrentRoomIcon;
+        StartRoom.exploredRoom = true;
+        StartRoom.revealedRoom = true;
         StartRoom.roomNumber = 0;
 
         PlayerSettings.currentRoom = StartRoom;
@@ -104,6 +106,11 @@ public class GenerateLevel : MonoBehaviour
         if(!treasure || !shop)
         {
             Regenerate();
+        }
+        else
+        {
+            ChangeRooms.RevealRooms(StartRoom);
+            ChangeRooms.ReDrawRevealedRooms();
         }
         
     }
