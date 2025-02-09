@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6802953341130024849}
   - component: {fileID: 6070924679525373841}
   - component: {fileID: 3216172556269566412}
-  - component: {fileID: 2896634761985898141}
+  - component: {fileID: 7526357832566735595}
   m_Layer: 3
   m_Name: DefaultAttackPrefab
   m_TagString: Untagged
@@ -30,9 +30,9 @@ Transform:
   m_GameObject: {fileID: 8660777835674394681}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: -3.6, y: 104.1, z: -10.9}
+  m_LocalScale: {x: 7, y: 7, z: 7}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -61,9 +61,6 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -138,7 +135,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &2896634761985898141
+--- !u!114 &7526357832566735595
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -147,6 +144,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8660777835674394681}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d0f5490360c7154687d7dc84626ea72, type: 3}
+  m_Script: {fileID: 11500000, guid: d806de71c68f91446a704ea2d92e03b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BarrelMaterialCracked1: {fileID: 2100000, guid: ffea6aa00e195294cb597b01af2b554d,
+    type: 2}
+  BarrelMaterialCracked2: {fileID: 2100000, guid: f2d4c5f8078b37b4cafb3b1923d34c0b,
+    type: 2}
+  LuckAttack: {fileID: 0}

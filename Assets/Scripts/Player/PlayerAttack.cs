@@ -5,6 +5,7 @@ public class PlayerAttack : MonoBehaviour
     private bool isAttacking = false;
     private bool canAttack = true;
     public float projectileSpeed = 10f;
+    public float projectileSpawnHeight = 1.5f;
 
 
     void Update()
@@ -47,7 +48,7 @@ public class PlayerAttack : MonoBehaviour
     // Hyökkäys
     public void Attack()
     {
-        GameObject projectile = Instantiate(PlayerSettings.Attack, transform.position + transform.forward * 2f + transform.up * 1.5f, Quaternion.identity);
+        GameObject projectile = Instantiate(PlayerSettings.Attack, transform.position + transform.forward * 2f + transform.up * projectileSpawnHeight, Quaternion.identity);
 
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
 
