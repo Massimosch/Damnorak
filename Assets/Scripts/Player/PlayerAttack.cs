@@ -48,7 +48,7 @@ public class PlayerAttack : MonoBehaviour
     // Hyökkäys
     public void Attack()
     {
-        GameObject projectile = Instantiate(PlayerSettings.Attack, transform.position + transform.forward * 2f + transform.up * projectileSpawnHeight, Quaternion.identity);
+        GameObject projectile = Instantiate(PlayerSettings.Attack, transform.position + transform.forward * 3 + transform.up * projectileSpawnHeight, Quaternion.identity);
 
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
 
