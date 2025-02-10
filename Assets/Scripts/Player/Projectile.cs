@@ -16,6 +16,12 @@ public class Projectile : MonoBehaviour
         audioSource.PlayOneShot(explosionSound);
         Destroy(Instantiate(PlayerSettings.AttackExplosion, transform.position, Quaternion.identity), 3);
 
+        if(collision.collider.name == "DrawX")
+        {
+            Destroy(Instantiate(LevelSettings.SecretRoomExplosion, collision.collider.transform.position, Quaternion.identity), 4f);
+            Destroy(collision.gameObject);
+        }
+
         Destroy(gameObject, 0.6f);
     }
 }

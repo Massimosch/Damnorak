@@ -8,6 +8,7 @@ public class InitializePlayer : MonoBehaviour
     public Transform PlayerTransform;
     public CharacterController PlayerController;
     public GameObject AttackExplosion;
+    public GameObject SecretRoomExplosion;
 
     void Start()
     {
@@ -17,6 +18,7 @@ public class InitializePlayer : MonoBehaviour
         PlayerSettings.transform = PlayerTransform;
         PlayerSettings.Controller = PlayerController;
         PlayerSettings.AttackExplosion = AttackExplosion;
+        LevelSettings.SecretRoomExplosion = SecretRoomExplosion;
     }
 
 }

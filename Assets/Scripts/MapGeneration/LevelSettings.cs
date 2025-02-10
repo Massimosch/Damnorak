@@ -21,6 +21,8 @@ public static class LevelSettings
     public static Sprite CurrentRoomIcon;
     public static Sprite SecretRoomIcon;
 
+    public static GameObject SecretRoomExplosion;
+
     public static List<Room> rooms = new List<Room>();
 
     public static float RoomChangeTimer = 1f;
