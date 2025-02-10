@@ -127,7 +127,7 @@ public class ChangeRooms : MonoBehaviour
                 room.roomImage.color = new Color(1, 1, 1, 1);
             }
 
-            PlayerSettings.currentRoom.roomSprite = LevelSettings.CurrentRoomIcon;
+            PlayerSettings.currentRoom.roomImage.sprite = LevelSettings.CurrentRoomIcon;
         }
     }
 

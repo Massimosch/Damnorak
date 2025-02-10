@@ -19,6 +19,7 @@ public static class LevelSettings
     public static Sprite UnexploredRoomIcon;
     public static Sprite DefaultRoomIcon;
     public static Sprite CurrentRoomIcon;
+    public static Sprite SecretRoomIcon;
 
     public static List<Room> rooms = new List<Room>();
 

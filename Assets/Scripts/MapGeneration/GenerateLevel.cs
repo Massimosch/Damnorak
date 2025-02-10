@@ -10,6 +10,7 @@ public class GenerateLevel : MonoBehaviour
     public Sprite shopRoom;
     public Sprite treasureRoom;
     public Sprite unexploredRoom;
+    public Sprite secretRoom;
     bool regenerating = false;
     int failSafe = 0;
 
@@ -21,6 +22,7 @@ public class GenerateLevel : MonoBehaviour
         LevelSettings.ShopRoomIcon = shopRoom;
         LevelSettings.TreasureRoomIcon = treasureRoom;
         LevelSettings.UnexploredRoomIcon = unexploredRoom;
+        LevelSettings.SecretRoomIcon = secretRoom;
     }
 
     void Start()
@@ -102,8 +104,9 @@ public class GenerateLevel : MonoBehaviour
 
         bool treasure = GenerateSpecialRoom(LevelSettings.TreasureRoomIcon, 3);
         bool shop = GenerateSpecialRoom(LevelSettings.ShopRoomIcon, 2);
+        bool secret = GenerateSpecialRoom(LevelSettings.SecretRoomIcon, 4);
 
-        if(!treasure || !shop)
+        if(!treasure || !shop || !secret)
         {
             Regenerate();
         }
@@ -420,6 +423,7 @@ public class GenerateLevel : MonoBehaviour
         if(room.roomNumber == 1) TileName = "BossRoomTile";
         if(room.roomNumber == 2) TileName = "ShopRoomTile";
         if(room.roomNumber == 3) TileName = "ItemRoomTile";
+        if(room.roomNumber == 4) TileName = "SecretRoomTile";
         GameObject MapTile = new GameObject(TileName);
         Image RoomImage = MapTile.AddComponent<Image>();
         RoomImage.sprite = room.roomSprite;
@@ -430,6 +434,6 @@ public class GenerateLevel : MonoBehaviour
         RoomImage.transform.SetParent(transform, false);
 
         LevelSettings.rooms.Add(room);
-        Debug.Log("Drawing Room: " + room.roomNumber + " at location " + room.Location);
+        //Debug.Log("Drawing Room: " + room.roomNumber + " at location " + room.Location);
     }
 }
