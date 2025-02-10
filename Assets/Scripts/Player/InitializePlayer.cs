@@ -9,6 +9,13 @@ public class InitializePlayer : MonoBehaviour
     public CharacterController PlayerController;
     public GameObject AttackExplosion;
     public GameObject SecretRoomExplosion;
+    //public GameObject PlayerStaff;
+    public Sprite FullHeart;
+    public Sprite HalfHeart;
+    public Sprite EmptyHeart;
+    public GameObject HealthPanel;
+    public GameObject DamagePanel;
+    public RuntimeAnimatorController HeartAnimatorController;
 
     void Start()
     {
@@ -18,7 +25,16 @@ public class InitializePlayer : MonoBehaviour
         PlayerSettings.transform = PlayerTransform;
         PlayerSettings.Controller = PlayerController;
         PlayerSettings.AttackExplosion = AttackExplosion;
+        PlayerSettings.FullHeart = FullHeart;
+        PlayerSettings.EmptyHeart = EmptyHeart;
+        PlayerSettings.HalfHeart = HalfHeart;
+        PlayerSettings.DamagePanel = DamagePanel;
+        PlayerSettings.HeartPanel = HealthPanel;
+        PlayerSettings.HeartAnimator = HeartAnimatorController;
+
+
         LevelSettings.SecretRoomExplosion = SecretRoomExplosion;
+        
     }
 
 }
