@@ -6277,6 +6277,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7f04375c240fd38495e74ef0c3b6d82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 28740049}
   unwalkableMask:
     serializedVersion: 2
     m_Bits: 128
