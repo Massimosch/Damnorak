@@ -133,7 +133,7 @@ public class HealthScript : MonoBehaviour
 
     public static void DrawHearts()
     {
-        for(int i = 0; i < PlayerSettings.Health-1; i++)
+        for(int i = 0; i < PlayerSettings.Health; i++)
         {
             DrawHeart(PlayerSettings.FullHeart, i);
         }

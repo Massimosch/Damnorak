@@ -8,8 +8,8 @@ public static class PlayerSettings
     public static Animator animator;
     public static GameObject PlayerStaff;
     public static float Speed = 0.1f;
-    public static float Health = 2.5f;
-    public static float MaxHealth = 4f;
+    public static float Health = 20f;
+    public static float MaxHealth = 20f;
     public static float AttackSpeed = 30;
 
     public static GameObject Attack;
