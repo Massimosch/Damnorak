@@ -106,13 +106,17 @@ public class GridA : MonoBehaviour
                 penaltiesVerticalPass[x, 0] += penaltiesHorizontalPass[x, sampleY];
             }
 
+            int blurredPenalty = Mathf.RoundToInt((float)penaltiesVerticalPass[x, 0] / (kernelSize * kernelSize));
+            grid [x, 0].movementPenalty = blurredPenalty;
+
+
             for (int y = 1; y < gridSizeY; y++)
             {
                 int removeIndex = Mathf.Clamp(y - kernelExtents - 1, 0, gridSizeY);
                 int addIndex = Mathf.Clamp(y + kernelExtents, 0, gridSizeY - 1);
 
                 penaltiesVerticalPass[x, y] = penaltiesVerticalPass [x, y - 1] - penaltiesHorizontalPass [x, removeIndex] + penaltiesHorizontalPass [x, addIndex];
-                int blurredPenalty = Mathf.RoundToInt((float)penaltiesHorizontalPass[x, y] / (kernelSize * kernelSize));
+                blurredPenalty = Mathf.RoundToInt((float)penaltiesHorizontalPass[x, y] / (kernelSize * kernelSize));
                 grid[x, y].movementPenalty = blurredPenalty;
 
                 if (blurredPenalty > penaltyMax)
@@ -123,6 +127,12 @@ public class GridA : MonoBehaviour
                 {
                     penaltyMin = blurredPenalty;
                 }
+                /*
+                if (penaltyMin == penaltyMax)
+                {
+                    penaltyMax += 1;
+                }
+                */
             }
         }
     }
