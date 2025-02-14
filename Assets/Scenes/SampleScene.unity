@@ -6307,7 +6307,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 28740049}
-  displayGridGizmos: 1
+  displayGridGizmos: 0
   unwalkableMask:
     serializedVersion: 2
     m_Bits: 128
@@ -7492,7 +7492,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb195263730b7dbffaeee6a005871103, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb195263730b7dbffaeee6a005871103, type: 3}
       propertyPath: m_LocalPosition.z
@@ -23142,6 +23142,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 28740049}
+  speed: 20
+  turnDst: 5
 --- !u!1 &1764014326
 GameObject:
   m_ObjectHideFlags: 0

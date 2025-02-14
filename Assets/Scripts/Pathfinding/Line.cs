@@ -8,7 +8,7 @@ public struct Line {
     Vector2 pointOnLine_1;
     Vector2 pointOnLine_2;
 
-    float gradientPerpendicular;
+    //float gradientPerpendicular;
 
     bool approachSide;
 
@@ -17,22 +17,13 @@ public struct Line {
         float dx = pointOnLine.x - pointPerpendicularToLine.x;
         float dy = pointOnLine.y - pointPerpendicularToLine.y;
 
-        if (dx == 0)
-        {
-            gradientPerpendicular = verticalLineGradient;
-        }
-        else
-        {
-            gradientPerpendicular = dy / dx;
-        }
-
-        if (gradientPerpendicular == 0)
+        if (dy == 0)
         {
             gradient = verticalLineGradient;
         }
         else
         {
-            gradient = -1 / gradientPerpendicular;
+            gradient = -dx / dy;
         }
 
         y_intercept = pointOnLine.y - gradient * pointOnLine.x;
@@ -51,5 +42,12 @@ public struct Line {
     public bool HasCrossedLine(Vector2 p)
     {
         return GetSide(p) != approachSide;
+    }
+
+    public void DrawWithGizmos(float length)
+    {
+        Vector3 lineDir = new Vector3(1, 0, gradient).normalized;
+        Vector3 lineCentre = new Vector3(pointOnLine_1.x, 0, pointOnLine_1.y) + Vector3.up;
+        Gizmos.DrawLine(lineCentre - lineDir * length / 2f, lineCentre + lineDir * length / 2f);
     }
 }
