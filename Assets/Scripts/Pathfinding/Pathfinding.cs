@@ -26,10 +26,11 @@ public class Pathfinding : MonoBehaviour
         sw.Start();
 
         Vector3[] waypoints = new Vector3[0];
-        bool pathSuccees = false;
+        bool pathSucces = false;
 
         Node startNode = grid.NodeFromWorldPoint(startPos);
         Node targetNode = grid.NodeFromWorldPoint(targetPos);
+        startNode.parent = startNode;
 
 
         if (startNode.walkable && targetNode.walkable)
@@ -47,7 +48,7 @@ public class Pathfinding : MonoBehaviour
                 {
                     sw.Stop();
                     print("Path is found: " + sw.ElapsedMilliseconds + " ms");
-                    pathSuccees = true;
+                    pathSucces = true;
                     break;
                 }
                 
@@ -58,7 +59,7 @@ public class Pathfinding : MonoBehaviour
                         continue;
                     }
 
-                    int newMovementCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbour);
+                    int newMovementCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbour) + neighbour.movementPenalty;
                     if (newMovementCostToNeighbour < neighbour.gCost || !openSet.Contains(neighbour))
                     {
                         neighbour.gCost = newMovementCostToNeighbour;
@@ -69,16 +70,20 @@ public class Pathfinding : MonoBehaviour
                         {
                             openSet.Add(neighbour);
                         }
+                        else
+                        {
+                            openSet.UpdateItem(neighbour);
+                        }
                     }
                 }
             }
         }
         yield return null;
-        if (pathSuccees)
+        if (pathSucces)
         {
             waypoints = RetracePath(startNode, targetNode);
         }
-        requestManager.FinishedProcessingPath(waypoints, pathSuccees);
+        requestManager.FinishedProcessingPath(waypoints, pathSucces);
 
     }
 
@@ -121,7 +126,7 @@ public class Pathfinding : MonoBehaviour
 
         if (distX > distY)
             return 14 * distY + 10 * (distX-distY);
-        return 14 * distX + 10 * (distX-distY);
+        return 14 * distX + 10 * (distY-distX);
     }   
     
 }

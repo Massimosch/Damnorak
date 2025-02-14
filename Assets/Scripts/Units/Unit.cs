@@ -13,13 +13,14 @@ public class Unit : MonoBehaviour
         PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
     }
 
-    public void OnPathFound(Vector3[] newPath, bool pathSucceessful)
+    public void OnPathFound(Vector3[] newPath, bool pathSuccessful)
     {
-        if (pathSucceessful)
+        if (pathSuccessful)
         {
             path = newPath;
-            StopCoroutine("FollowPath");
-            StartCoroutine("FollowPath");
+            targetIndex = 0;
+            StopCoroutine(nameof(FollowPath));
+            StartCoroutine(nameof(FollowPath));
         }
     }
 

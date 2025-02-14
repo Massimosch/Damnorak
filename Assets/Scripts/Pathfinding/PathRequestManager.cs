@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
-using Unity.VisualScripting;
 
 public class PathRequestManager : MonoBehaviour
 {
@@ -35,9 +34,9 @@ public class PathRequestManager : MonoBehaviour
         }
     }
 
-    public void FinishedProcessingPath(Vector3[] path, bool succees)
+    public void FinishedProcessingPath(Vector3[] path, bool succes)
     {
-        currentPathRequest.callback(path, succees);
+        currentPathRequest.callback(path, succes);
         isProcessingPath = false;
         TryProcessNext();
     }
