@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Unit : MonoBehaviour {
+public class Unit : MonoBehaviour, IDamageable {
 
 	const float minPathUpdateTime = .2f;
 	const float pathUpdateMoveThreshold = .5f;
@@ -14,8 +14,13 @@ public class Unit : MonoBehaviour {
 
 	Path path;
 
-	void Start() {
+    [SerializeField] public float MaxHealth {get; set;} = 100f;
+    public float CurrentHealth {get; set;}
+
+    void Start() 
+	{
 		StartCoroutine (UpdatePath ());
+		CurrentHealth = MaxHealth;
 	}
 
 	public void OnPathFound(Vector3[] waypoints, bool pathSuccessful) {
@@ -90,4 +95,19 @@ public class Unit : MonoBehaviour {
 			path.DrawWithGizmos ();
 		}
 	}
+
+    public void Damage(float damageAmount)
+    {
+        CurrentHealth -= damageAmount;
+
+		if (CurrentHealth <= 0f)
+		{
+			Die();
+		}
+    }
+
+    public void Die()
+    {
+		Destroy(gameObject);
+    }
 }
