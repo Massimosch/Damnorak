@@ -1,12 +1,17 @@
 using UnityEngine;
 using System.Collections;
+using Unity.VisualScripting;
+using System.Linq;
 
-public class Unit : MonoBehaviour, IDamageable {
+public class Unit : MonoBehaviour, IDamageable, ITriggerCheckable {
 
 	const float minPathUpdateTime = .2f;
 	const float pathUpdateMoveThreshold = .5f;
 
 	public Transform target;
+	public Transform patrolPath;
+	public Transform[] waypoints;
+	public int lastWaypointIndex = -1;
 	public float speed = 20;
 	public float turnSpeed = 3;
 	public float turnDst = 5;
@@ -22,12 +27,28 @@ public class Unit : MonoBehaviour, IDamageable {
 	public EnemyIdleState IdleState {get; set;}
 	public EnemyChaseState ChaseState {get; set;}
 	public EnemyAttackState AttackState {get; set;}
+    public bool IsAggroed { get; set; }
+    public bool IsWithinStrikingDistance { get; set; }
+    #endregion
+
+	#region ScriptableObject Variables
+	[SerializeField] private EnemyIdleSOBase EnemyIdleBase;
+	[SerializeField] private EnemyChaseSOBase EnemyChaseBase;
+	[SerializeField] private EnemyAttackSOBase EnemyAttackBase;
+
+	public EnemyIdleSOBase EnemyIdleBaseInstance {get; set;}
+	public EnemyChaseSOBase EnemyChaseBaseInstance {get; set;}
+	public EnemyAttackSOBase EnemyAttackBaseInstance {get; set;}
 	#endregion
 
-    private void Awake()
-	{
-		StateMachine = new EnemyStateMachine();
 
+	private void Awake()
+	{
+		EnemyIdleBaseInstance = Instantiate(EnemyIdleBase);
+		EnemyChaseBaseInstance = Instantiate(EnemyChaseBase);
+		EnemyAttackBaseInstance = Instantiate(EnemyAttackBase);
+
+		StateMachine = new EnemyStateMachine();
 		IdleState = new EnemyIdleState(this, StateMachine);
 		ChaseState = new EnemyChaseState(this, StateMachine);
 		AttackState = new EnemyAttackState(this, StateMachine);
@@ -37,6 +58,12 @@ public class Unit : MonoBehaviour, IDamageable {
 	{
 		StartCoroutine (UpdatePath ());
 		CurrentHealth = MaxHealth;
+
+		waypoints = patrolPath.GetComponentsInChildren<Transform>().ToArray();
+
+		EnemyIdleBaseInstance.Initialize(gameObject, this);
+		EnemyChaseBaseInstance.Initialize(gameObject, this);
+		EnemyAttackBaseInstance.Initialize(gameObject, this);
 
 		StateMachine.Initialize(IdleState);
 	}
@@ -60,7 +87,7 @@ public class Unit : MonoBehaviour, IDamageable {
 		}
 	}
 
-	IEnumerator UpdatePath() {
+	public IEnumerator UpdatePath() {
 
 		if (Time.timeSinceLevelLoad < .3f) {
 			yield return new WaitForSeconds (.3f);
@@ -139,12 +166,26 @@ public class Unit : MonoBehaviour, IDamageable {
 		Destroy(gameObject);
     }
 
+	#region Distance Checks
+
+	public void SetAggroStatus(bool isAggroed)
+	{
+		IsAggroed = isAggroed;
+	}
+
+	public void SetStrikingDistanceBool(bool isWithinStrikingDistance)
+	{
+		IsWithinStrikingDistance = isWithinStrikingDistance;
+	}
+
+	#endregion
+
 	private void AnimationTriggerEvent(AnimationTriggerType triggerType)
 	{
 		StateMachine.CurrentEnemyState.AnimationTriggerEvent(triggerType);
 	}
 
-	public enum AnimationTriggerType
+    public enum AnimationTriggerType
 	{
 		EnemyDamaged,
 		PlayFootstepSound
