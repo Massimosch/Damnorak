@@ -30,7 +30,14 @@ public class EnemyChaseDirectToPlayer : EnemyChaseSOBase
     public override void DoPhysicsLogic()
     {
         base.DoPhysicsLogic();
+
+        if (playerTransform != null)
+        {
+            Vector3 direction = (playerTransform.position - enemy.transform.position).normalized;
+            enemy.transform.position += direction * 3f * Time.deltaTime; // Muokkaa nopeutta tarpeen mukaan
+        }
     }
+
 
     public override void ResetValues()
     {

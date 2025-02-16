@@ -6,18 +6,16 @@ using System.Linq;
 public class Unit : MonoBehaviour, IDamageable, ITriggerCheckable {
 
 	const float minPathUpdateTime = .2f;
-	const float pathUpdateMoveThreshold = .5f;
 
 	public Transform target;
-	public Transform patrolPath;
-	public Transform[] waypoints;
-	public int lastWaypointIndex = -1;
 	public float speed = 20;
 	public float turnSpeed = 3;
 	public float turnDst = 5;
 	public float stoppingDst = 10;
 
 	Path path;
+	public Transform[] waypoints;
+	public int currentWaypointIndex = 0;
 
     [SerializeField] public float MaxHealth {get; set;} = 100f;
     public float CurrentHealth {get; set;}
@@ -41,8 +39,7 @@ public class Unit : MonoBehaviour, IDamageable, ITriggerCheckable {
 	public EnemyAttackSOBase EnemyAttackBaseInstance {get; set;}
 	#endregion
 
-
-	private void Awake()
+	public void Awake()
 	{
 		EnemyIdleBaseInstance = Instantiate(EnemyIdleBase);
 		EnemyChaseBaseInstance = Instantiate(EnemyChaseBase);
@@ -53,19 +50,19 @@ public class Unit : MonoBehaviour, IDamageable, ITriggerCheckable {
 		ChaseState = new EnemyChaseState(this, StateMachine);
 		AttackState = new EnemyAttackState(this, StateMachine);
 	}
+
 	
-	void Start() 
+	public void Start() 
 	{
 		StartCoroutine (UpdatePath ());
 		CurrentHealth = MaxHealth;
-
-		waypoints = patrolPath.GetComponentsInChildren<Transform>().ToArray();
 
 		EnemyIdleBaseInstance.Initialize(gameObject, this);
 		EnemyChaseBaseInstance.Initialize(gameObject, this);
 		EnemyAttackBaseInstance.Initialize(gameObject, this);
 
 		StateMachine.Initialize(IdleState);
+		target = waypoints[0];
 	}
 
     void Update()
@@ -87,61 +84,70 @@ public class Unit : MonoBehaviour, IDamageable, ITriggerCheckable {
 		}
 	}
 
-	public IEnumerator UpdatePath() {
-
-		if (Time.timeSinceLevelLoad < .3f) {
-			yield return new WaitForSeconds (.3f);
+	public IEnumerator UpdatePath() 
+	{
+		if (Time.timeSinceLevelLoad < .3f) 
+		{
+			yield return new WaitForSeconds(.3f);
 		}
-		PathRequestManager.RequestPath (new PathRequest(transform.position, target.position, OnPathFound));
 
-		float sqrMoveThreshold = pathUpdateMoveThreshold * pathUpdateMoveThreshold;
-		Vector3 targetPosOld = target.position;
-
-		while (true) {
-			yield return new WaitForSeconds (minPathUpdateTime);
-			print (((target.position - targetPosOld).sqrMagnitude) + "    " + sqrMoveThreshold);
-			if ((target.position - targetPosOld).sqrMagnitude > sqrMoveThreshold) {
-				PathRequestManager.RequestPath (new PathRequest(transform.position, target.position, OnPathFound));
-				targetPosOld = target.position;
-			}
+		while (true) 
+		{
+			yield return new WaitForSeconds(minPathUpdateTime);
+			PathRequestManager.RequestPath(new PathRequest(transform.position, target.position, OnPathFound));
 		}
 	}
 
-	IEnumerator FollowPath() {
 
+
+	IEnumerator FollowPath() 
+	{
 		bool followingPath = true;
 		int pathIndex = 0;
-		transform.LookAt (path.lookPoints [0]);
+
+		if (path == null || path.lookPoints.Length == 0)
+		{
+			yield break; // 🔥 Varmista, että polku on olemassa
+		}
+
+		transform.LookAt(path.lookPoints[0]);
 
 		float speedPercent = 1;
 
-		while (followingPath) {
-			Vector2 pos2D = new Vector2 (transform.position.x, transform.position.z);
-			while (path.turnBoundaries [pathIndex].HasCrossedLine (pos2D)) {
-				if (pathIndex == path.finishLineIndex) {
+		while (followingPath) 
+		{
+			Vector2 pos2D = new Vector2(transform.position.x, transform.position.z);
+
+			while (path.turnBoundaries[pathIndex].HasCrossedLine(pos2D)) 
+			{
+				if (pathIndex == path.finishLineIndex) 
+				{
 					followingPath = false;
 					break;
-				} else {
+				} 
+				else 
+				{
 					pathIndex++;
 				}
 			}
 
-			if (followingPath) {
-
-				if (pathIndex >= path.slowDownIndex && stoppingDst > 0) {
-					speedPercent = Mathf.Clamp01 (path.turnBoundaries [path.finishLineIndex].DistanceFromPoint (pos2D) / stoppingDst);
-					if (speedPercent < 0.01f) {
+			if (followingPath) 
+			{
+				if (pathIndex >= path.slowDownIndex && stoppingDst > 0) 
+				{
+					speedPercent = Mathf.Clamp01(path.turnBoundaries[path.finishLineIndex].DistanceFromPoint(pos2D) / stoppingDst);
+					if (speedPercent < 0.01f) 
+					{
 						followingPath = false;
 					}
 				}
 
-				Quaternion targetRotation = Quaternion.LookRotation (path.lookPoints [pathIndex] - transform.position);
-				transform.rotation = Quaternion.Lerp (transform.rotation, targetRotation, Time.deltaTime * turnSpeed);
-				transform.Translate (Vector3.forward * Time.deltaTime * speed * speedPercent, Space.Self);
+				Quaternion targetRotation = Quaternion.LookRotation(path.lookPoints[pathIndex] - transform.position);
+				transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * turnSpeed);
+				transform.Translate(Vector3.forward * Time.deltaTime * speed * speedPercent, Space.Self);
 			}
 
 			yield return null;
-
 		}
 	}
 
