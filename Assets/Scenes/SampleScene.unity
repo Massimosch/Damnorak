@@ -895,7 +895,7 @@ Transform:
   m_GameObject: {fileID: 93958903}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.9, y: 0, z: 38.79}
+  m_LocalPosition: {x: -35.3, y: 0, z: -19.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -29645,17 +29645,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8a3eae0e1d0cd844a920e4939ee2d3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 93958904}
   speed: 20
   turnSpeed: 3
   turnDst: 5
   stoppingDst: 10
-  waypoints:
+  currentPath:
   - {fileID: 93958904}
   - {fileID: 656355471}
   - {fileID: 1288414207}
   - {fileID: 1778213602}
-  currentWaypointIndex: 0
+  pathIndex: 0
   EnemyIdleBase: {fileID: 11400000, guid: 27eb0a3ff20b20f4fa129e898f557d8b, type: 2}
   EnemyChaseBase: {fileID: 11400000, guid: de3c9e34456d4c94c89ad14df87089d9, type: 2}
   EnemyAttackBase: {fileID: 11400000, guid: e5ebc293f70b99d47ad7350d77c3adc5, type: 2}

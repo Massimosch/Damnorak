@@ -6,16 +6,13 @@ using System.Linq;
 public class Unit : MonoBehaviour, IDamageable, ITriggerCheckable {
 
 	const float minPathUpdateTime = .2f;
-
-	public Transform target;
 	public float speed = 20;
 	public float turnSpeed = 3;
 	public float turnDst = 5;
 	public float stoppingDst = 10;
 
 	Path path;
-	public Transform[] waypoints;
-	public int currentWaypointIndex = 0;
+	public Transform target;
 
     [SerializeField] public float MaxHealth {get; set;} = 100f;
     public float CurrentHealth {get; set;}
@@ -39,7 +36,7 @@ public class Unit : MonoBehaviour, IDamageable, ITriggerCheckable {
 	public EnemyAttackSOBase EnemyAttackBaseInstance {get; set;}
 	#endregion
 
-	public void Awake()
+	protected virtual void Awake()
 	{
 		EnemyIdleBaseInstance = Instantiate(EnemyIdleBase);
 		EnemyChaseBaseInstance = Instantiate(EnemyChaseBase);
@@ -52,7 +49,7 @@ public class Unit : MonoBehaviour, IDamageable, ITriggerCheckable {
 	}
 
 	
-	public void Start() 
+	protected virtual void Start() 
 	{
 		StartCoroutine (UpdatePath ());
 		CurrentHealth = MaxHealth;
@@ -62,7 +59,6 @@ public class Unit : MonoBehaviour, IDamageable, ITriggerCheckable {
 		EnemyAttackBaseInstance.Initialize(gameObject, this);
 
 		StateMachine.Initialize(IdleState);
-		target = waypoints[0];
 	}
 
     void Update()
@@ -94,21 +90,15 @@ public class Unit : MonoBehaviour, IDamageable, ITriggerCheckable {
 		while (true) 
 		{
 			yield return new WaitForSeconds(minPathUpdateTime);
+			Vector3 targetPos = target.position;
 			PathRequestManager.RequestPath(new PathRequest(transform.position, target.position, OnPathFound));
 		}
 	}
-
-
 
 	IEnumerator FollowPath() 
 	{
 		bool followingPath = true;
 		int pathIndex = 0;
-
-		if (path == null || path.lookPoints.Length == 0)
-		{
-			yield break; // 🔥 Varmista, että polku on olemassa
-		}
 
 		transform.LookAt(path.lookPoints[0]);
 

@@ -3,20 +3,14 @@ using UnityEngine;
 public class Ghost : Unit
 {
     
-    void Awake()
+    protected override void Awake()
     {
         base.Awake();
     }
 
-    void Start()
+    protected override void Start()
     {
         base.Start();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     private void OnTriggerEnter(Collider other)
