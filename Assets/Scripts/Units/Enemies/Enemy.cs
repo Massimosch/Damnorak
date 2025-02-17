@@ -46,7 +46,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
         EnemyChaseBaseInstance.Initialize(gameObject, this);
         EnemyAttackBaseInstance.Initialize(gameObject, this);
 
-        //StateMachine.CurrentEnemyState(IdleState);
+        StateMachine.Initialize(IdleState);
     }
 
     void Update()

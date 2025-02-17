@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Chase-Direct Chase", menuName = "Enemy Logic/Chase Logic/Direct Chase")]
 public class EnemyChaseDirectToPlayer : EnemyChaseSOBase
 {
-
+    public float moveSpeed = 10f;
     public override void DoAnimationTriggerEventLogic(Enemy.AnimationTriggerType triggerType)
     {
         base.DoAnimationTriggerEventLogic(triggerType);
@@ -34,7 +34,7 @@ public class EnemyChaseDirectToPlayer : EnemyChaseSOBase
         if (playerTransform != null)
         {
             Vector3 direction = (playerTransform.position - enemy.transform.position).normalized;
-            enemy.transform.position += direction * 3f * Time.deltaTime; // Muokkaa nopeutta tarpeen mukaan
+            enemy.transform.position += direction * moveSpeed * Time.deltaTime;
         }
     }
 

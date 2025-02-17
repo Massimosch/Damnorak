@@ -7,7 +7,7 @@ public class EnemyIdleRandomWander : EnemyIdleSOBase
 {
     #region Idle Variables
     [SerializeField] private float RandomMovementRange = 5f;
-    [SerializeField] private float RandomMovementSpeed = 1f;
+    [SerializeField] private float RandomMovementSpeed = 5f;
     private Vector3 _direction;
     private Vector3 _targetPos;
 
@@ -22,6 +22,7 @@ public class EnemyIdleRandomWander : EnemyIdleSOBase
     public override void DoEnterLogic()
     {
         base.DoEnterLogic();
+        _targetPos = GetRandomPointInCircle();
     }
 
 
@@ -29,7 +30,7 @@ public class EnemyIdleRandomWander : EnemyIdleSOBase
     {
         base.DoExitLogic();
 
-        _targetPos = GetRandomPointInCircle();
+        
     }
 
     public override void DoFrameUpdateLogic()
@@ -62,14 +63,9 @@ public class EnemyIdleRandomWander : EnemyIdleSOBase
         base.ResetValues();
     }
 
-    private void ChooseNewIdleDirection()
-    {
-        float randomAngle = Random.Range(0f, 360f);
-        _direction = new Vector3(Mathf.Cos(randomAngle), 0, Mathf.Sin(randomAngle));
-    }
-
     private Vector3 GetRandomPointInCircle()
     {
-        return enemy.transform.position + (Vector3)Random.insideUnitCircle * RandomMovementRange;
+        Vector2 randomCircle = Random.insideUnitCircle * RandomMovementRange;
+        return enemy.transform.position + new Vector3(randomCircle.x, 0, randomCircle.y);
     }
 }
