@@ -17,6 +17,7 @@ public class EnemyStrikingDistanceCheck : MonoBehaviour
         if (collider.gameObject == PlayerTarget)
         {
             _enemy.SetStrikingDistanceBool(true);
+            HealthScript.TakeDamage(1);
         }
     }
 

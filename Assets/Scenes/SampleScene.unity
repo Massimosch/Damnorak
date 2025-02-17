@@ -26015,7 +26015,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1999103775
 Transform:
   m_ObjectHideFlags: 0
@@ -29652,7 +29652,7 @@ MonoBehaviour:
   turnDst: 5
   stoppingDst: 20
   target: {fileID: 28740049}
-  rb: {fileID: 0}
+  rb: {fileID: 3903958302274149303}
   EnemyIdleBase: {fileID: 11400000, guid: 27eb0a3ff20b20f4fa129e898f557d8b, type: 2}
   EnemyChaseBase: {fileID: 11400000, guid: de3c9e34456d4c94c89ad14df87089d9, type: 2}
   EnemyAttackBase: {fileID: 11400000, guid: e5ebc293f70b99d47ad7350d77c3adc5, type: 2}

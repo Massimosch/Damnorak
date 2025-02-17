@@ -21,7 +21,6 @@ public class EnemyIdleRandomWander : EnemyIdleSOBase
     }
 
 
-
     public override void DoExitLogic()
     {
         base.DoExitLogic();

@@ -142,11 +142,11 @@ public class Unit : MonoBehaviour, IDamageable, ITriggerCheckable {
 
     public void SetAggroStatus(bool isAggroed)
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public void SetStrikingDistanceBool(bool isWithinStrikingDistance)
     {
-        throw new System.NotImplementedException();
+        
     }
 }
