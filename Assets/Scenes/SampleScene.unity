@@ -6113,7 +6113,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &496684181
 Transform:
   m_ObjectHideFlags: 0
@@ -6332,7 +6332,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &504267275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28614,8 +28614,8 @@ GameObject:
   - component: {fileID: 3903958302274149299}
   - component: {fileID: 3903958302264564529}
   - component: {fileID: 3903958302274149301}
-  - component: {fileID: 3903958302274149302}
   - component: {fileID: 3903958302274149303}
+  - component: {fileID: 3903958302274149304}
   m_Layer: 0
   m_Name: Ghost
   m_TagString: Untagged
@@ -29605,7 +29605,7 @@ Transform:
   m_GameObject: {fileID: 3903958302273949917}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -9.37, y: 0.31, z: 31.2}
+  m_LocalPosition: {x: -9.37, y: 0.31, z: 16.3}
   m_LocalScale: {x: 6, y: 6, z: 6}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -29635,27 +29635,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.5, y: 1.5, z: 0.5}
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &3903958302274149302
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3903958302273949917}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8a3eae0e1d0cd844a920e4939ee2d3d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 20
-  turnSpeed: 3
-  turnDst: 5
-  stoppingDst: 20
-  target: {fileID: 28740049}
-  rb: {fileID: 3903958302274149303}
-  EnemyIdleBase: {fileID: 11400000, guid: 27eb0a3ff20b20f4fa129e898f557d8b, type: 2}
-  EnemyChaseBase: {fileID: 11400000, guid: de3c9e34456d4c94c89ad14df87089d9, type: 2}
-  EnemyAttackBase: {fileID: 11400000, guid: e5ebc293f70b99d47ad7350d77c3adc5, type: 2}
 --- !u!54 &3903958302274149303
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -29683,6 +29662,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &3903958302274149304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3903958302273949917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8a3eae0e1d0cd844a920e4939ee2d3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <MaxHealth>k__BackingField: 100
+  EnemyIdleBase: {fileID: 11400000, guid: 27eb0a3ff20b20f4fa129e898f557d8b, type: 2}
+  EnemyChaseBase: {fileID: 11400000, guid: de3c9e34456d4c94c89ad14df87089d9, type: 2}
+  EnemyAttackBase: {fileID: 11400000, guid: e5ebc293f70b99d47ad7350d77c3adc5, type: 2}
 --- !u!4 &3903958302274151471
 Transform:
   m_ObjectHideFlags: 0

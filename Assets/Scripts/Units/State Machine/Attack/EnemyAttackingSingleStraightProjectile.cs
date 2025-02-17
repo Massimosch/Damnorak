@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Attack-Straight-Single Projectile", menuName = "Enemy Logic/Attack Logic/Straight Single Projectile")]
 public class EnemyAttackingSingleStraightProjectile : EnemyAttackSOBase
 {
-    public override void DoAnimationTriggerEventLogic(Unit.AnimationTriggerType triggerType)
+    public override void DoAnimationTriggerEventLogic(Enemy.AnimationTriggerType triggerType)
     {
         base.DoAnimationTriggerEventLogic(triggerType);
     }
@@ -28,7 +28,7 @@ public class EnemyAttackingSingleStraightProjectile : EnemyAttackSOBase
         base.DoPhysicsLogic();
     }
 
-    public override void Initialize(GameObject gameObject, Unit enemy)
+    public override void Initialize(GameObject gameObject, Enemy enemy)
     {
         base.Initialize(gameObject, enemy);
     }

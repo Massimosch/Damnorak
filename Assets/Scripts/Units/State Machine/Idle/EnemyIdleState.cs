@@ -4,11 +4,11 @@ using UnityEngine;
 public class EnemyIdleState : EnemyState
 {
 
-    public EnemyIdleState(Unit enemy, EnemyStateMachine enemyStateMachine) : base(enemy, enemyStateMachine)
+    public EnemyIdleState(Enemy enemy, EnemyStateMachine enemyStateMachine) : base(enemy, enemyStateMachine)
     {
     }
 
-    public override void AnimationTriggerEvent(Unit.AnimationTriggerType triggerType)
+    public override void AnimationTriggerEvent(Enemy.AnimationTriggerType triggerType)
     {
         base.AnimationTriggerEvent(triggerType);
 
@@ -39,6 +39,4 @@ public class EnemyIdleState : EnemyState
         base.PhysicsUpdate();
         enemy.EnemyIdleBaseInstance.DoPhysicsLogic();
     }
-
-
 }

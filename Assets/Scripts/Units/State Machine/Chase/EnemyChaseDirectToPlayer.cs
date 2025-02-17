@@ -4,7 +4,7 @@ using UnityEngine;
 public class EnemyChaseDirectToPlayer : EnemyChaseSOBase
 {
 
-    public override void DoAnimationTriggerEventLogic(Unit.AnimationTriggerType triggerType)
+    public override void DoAnimationTriggerEventLogic(Enemy.AnimationTriggerType triggerType)
     {
         base.DoAnimationTriggerEventLogic(triggerType);
     }
@@ -44,7 +44,7 @@ public class EnemyChaseDirectToPlayer : EnemyChaseSOBase
         base.ResetValues();
     }
 
-    public override void Initialize(GameObject gameObject, Unit enemy)
+    public override void Initialize(GameObject gameObject, Enemy enemy)
     {
         base.Initialize(gameObject, enemy);
     }

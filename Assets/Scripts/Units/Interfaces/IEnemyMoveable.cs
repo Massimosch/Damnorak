@@ -1,16 +1,8 @@
 using UnityEngine;
 
-public class IEnemyMoveable : MonoBehaviour
+public interface IEnemyMoveable
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    Rigidbody rb { get; set; }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    void MoveEnemy(Vector3 velocity);
 }

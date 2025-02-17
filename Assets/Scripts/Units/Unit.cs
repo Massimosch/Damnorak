@@ -40,11 +40,12 @@ public class Unit : MonoBehaviour, IDamageable, ITriggerCheckable {
         EnemyIdleBaseInstance = Instantiate(EnemyIdleBase);
         EnemyChaseBaseInstance = Instantiate(EnemyChaseBase);
         EnemyAttackBaseInstance = Instantiate(EnemyAttackBase);
-        
+        /*
         StateMachine = new EnemyStateMachine();
         IdleState = new EnemyIdleState(this, StateMachine);
         ChaseState = new EnemyChaseState(this, StateMachine);
         AttackState = new EnemyAttackState(this, StateMachine);
+        */
     }
 
     protected virtual void Start() {
@@ -52,11 +53,12 @@ public class Unit : MonoBehaviour, IDamageable, ITriggerCheckable {
         rb = GetComponent<Rigidbody>();
         StartCoroutine(UpdatePath());
         CurrentHealth = MaxHealth;
-
+        /*
         EnemyIdleBaseInstance.Initialize(gameObject, this);
         EnemyChaseBaseInstance.Initialize(gameObject, this);
         EnemyAttackBaseInstance.Initialize(gameObject, this);
         StateMachine.Initialize(IdleState);
+        */
     }
 
     void Update() {

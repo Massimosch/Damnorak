@@ -3,13 +3,13 @@ using UnityEngine;
 public class EnemyStrikingDistanceCheck : MonoBehaviour
 {
     public GameObject PlayerTarget {get; set;}
-    private Unit _enemy;
+    private Enemy _enemy;
 
     void Awake()
     {
         PlayerTarget = GameObject.FindGameObjectWithTag("Player");
 
-        _enemy = GetComponentInParent<Unit>();
+        _enemy = GetComponentInParent<Enemy>();
     }
 
     void OnTriggerEnter(Collider collider)

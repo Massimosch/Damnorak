@@ -3,7 +3,7 @@ using UnityEngine;
 public class EnemyChaseState : EnemyState
 {
 
-    public EnemyChaseState(Unit enemy, EnemyStateMachine enemyStateMachine) : base(enemy, enemyStateMachine)
+    public EnemyChaseState(Enemy enemy, EnemyStateMachine enemyStateMachine) : base(enemy, enemyStateMachine)
     {
         
     }
@@ -33,7 +33,7 @@ public class EnemyChaseState : EnemyState
         enemy.EnemyChaseBaseInstance.DoFrameUpdateLogic();
     }
 
-    public override void AnimationTriggerEvent(Unit.AnimationTriggerType triggerType)
+    public override void AnimationTriggerEvent(Enemy.AnimationTriggerType triggerType)
     {
         base.AnimationTriggerEvent(triggerType);
         enemy.EnemyChaseBaseInstance.DoAnimationTriggerEventLogic(triggerType);
