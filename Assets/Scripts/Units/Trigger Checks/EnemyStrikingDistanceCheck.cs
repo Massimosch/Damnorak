@@ -18,6 +18,7 @@ public class EnemyStrikingDistanceCheck : MonoBehaviour
         {
             _enemy.SetStrikingDistanceBool(true);
             HealthScript.TakeDamage(1);
+            _enemy.SetAggroStatus(true);
         }
     }
 

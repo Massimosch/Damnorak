@@ -8,8 +8,6 @@ public class EnemyIdleRandomWander : EnemyIdleSOBase
     #region Idle Variables
     [SerializeField] private float RandomMovementRange = 5f;
     [SerializeField] private float RandomMovementSpeed = 5f;
-    private Vector3 _direction;
-    private Vector3 _targetPos;
 
     #endregion
 
@@ -22,7 +20,7 @@ public class EnemyIdleRandomWander : EnemyIdleSOBase
     public override void DoEnterLogic()
     {
         base.DoEnterLogic();
-        _targetPos = GetRandomPointInCircle();
+        
     }
 
 
@@ -36,15 +34,6 @@ public class EnemyIdleRandomWander : EnemyIdleSOBase
     public override void DoFrameUpdateLogic()
     {
         base.DoFrameUpdateLogic();
-
-        _direction = (_targetPos - enemy.transform.position).normalized;
-
-        enemy.MoveEnemy(_direction * RandomMovementSpeed);
-
-        if ((enemy.transform.position - _targetPos).sqrMagnitude < 0.01f)
-        {
-            _targetPos = GetRandomPointInCircle();
-        }
     }
 
     public override void DoPhysicsLogic()
@@ -61,11 +50,5 @@ public class EnemyIdleRandomWander : EnemyIdleSOBase
     public override void ResetValues()
     {
         base.ResetValues();
-    }
-
-    private Vector3 GetRandomPointInCircle()
-    {
-        Vector2 randomCircle = Random.insideUnitCircle * RandomMovementRange;
-        return enemy.transform.position + new Vector3(randomCircle.x, 0, randomCircle.y);
     }
 }
