@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c41100f34349b1d43896ee12a9bc75d7, type: 3}
+  m_Name: New Heart
+  m_EditorClassIdentifier: 
+  itemName: HealthItem
+  icon: {fileID: -557954973, guid: 8790d0f6c24e3c1c18422a350056cf47, type: 3}
+  maxStack: 99
+  healthRestore: 1

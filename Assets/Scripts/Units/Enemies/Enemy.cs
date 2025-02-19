@@ -90,25 +90,17 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
             yield break;
         }
 
-        // Get the material property
         Material material = enemyRenderer.material;
 
-        // Store original emission color
         Color originalEmission = material.GetColor("_EmissionColor");
 
-        // Set emission to bright red
         material.SetColor("_EmissionColor", Color.red);
         material.EnableKeyword("_EMISSION");
 
-        // Flash duration
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(flashDuration);
 
-        // Reset to original emission color
         material.SetColor("_EmissionColor", originalEmission);
     }
-
-
-
 
     public void Die()
     {

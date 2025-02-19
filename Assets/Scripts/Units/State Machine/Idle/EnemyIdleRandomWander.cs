@@ -5,11 +5,6 @@ using UnityEngine;
 
 public class EnemyIdleRandomWander : EnemyIdleSOBase
 {
-    #region Idle Variables
-    [SerializeField] private float RandomMovementRange = 5f;
-    [SerializeField] private float RandomMovementSpeed = 5f;
-
-    #endregion
 
 
     public override void DoAnimationTriggerEventLogic(Enemy.AnimationTriggerType triggerType)

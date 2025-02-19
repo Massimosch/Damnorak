@@ -193,13 +193,13 @@ public class GenerateLevel : MonoBehaviour
             }
             case "Up":
             {
-                //Check down right and left
-                if(LevelSettings.rooms.Exists(x => x.Location == new Vector2(v.x - 1 ,v.y)) ||
-                    LevelSettings.rooms.Exists(x => x.Location == new Vector2(v.x - 1 , v.y)) ||
-                    LevelSettings.rooms.Exists(x => x.Location == new Vector2(v.x ,v.y - 1)))
-                    return true;                    
-                break;
-            }   
+                if (LevelSettings.rooms.Exists(x => x.Location == new Vector2(v.x - 1, v.y)) ||
+                       LevelSettings.rooms.Exists(x => x.Location == new Vector2(v.x + 1, v.y)) ||
+                       LevelSettings.rooms.Exists(x => x.Location == new Vector2(v.x, v.y - 1)))
+                       return true;
+                     break;
+
+             }
             case "Down":
             {
                 //Check up left and right
@@ -290,54 +290,34 @@ public class GenerateLevel : MonoBehaviour
         }
     }
 
-   void GenerateBossRoom()
+    void GenerateBossRoom()
     {
-        float MaxNumber = 0f;
-        Vector2 FurthestRoom = Vector2.zero;
+        List<Room> sortedRooms = new List<Room>(LevelSettings.rooms);
+        sortedRooms.Sort((a, b) => (Mathf.Abs(b.Location.x) + Mathf.Abs(b.Location.y))
+                                 .CompareTo(Mathf.Abs(a.Location.x) + Mathf.Abs(a.Location.y)));
 
-        foreach (Room room in LevelSettings.rooms)
+        foreach (Room room in sortedRooms)
         {
-            float distance = Mathf.Abs(room.Location.x) + Mathf.Abs(room.Location.y);
-            if (distance > MaxNumber && room.Location != new Vector2(0, 0)) // Vältetään StartRoom
+            foreach (Vector2 dir in new Vector2[] { Vector2.left, Vector2.right, Vector2.up, Vector2.down })
             {
-                MaxNumber = distance;
-                FurthestRoom = room.Location;
-            }
-        }
-
-        Room BossRoom = new Room();
-        BossRoom.roomSprite = LevelSettings.BossRoomIcon;
-        BossRoom.roomNumber = 1;
-
-        Vector2[] directions = { new Vector2(-1, 0), new Vector2(1, 0), new Vector2(0, 1), new Vector2(0, -1) };
-
-        foreach (Vector2 dir in directions)
-        {
-            Vector2 newLocation = FurthestRoom + dir;
-            if (!CheckIfRoomExists(newLocation) && !CheckIfRoomsAroundGeneratedRoom(newLocation, dir.ToString()))
-            {
-                BossRoom.Location = newLocation;
-                DrawRoomOnMap(BossRoom);
-                return;
-            }
-        }
-
-        Debug.LogWarning("No valid location found for BossRoom, placing it at an available random spot.");
-        
-        foreach (Room room in LevelSettings.rooms)
-        {
-            foreach (Vector2 dir in directions)
-            {
-                Vector2 randomLocation = room.Location + dir;
-                if (!CheckIfRoomExists(randomLocation))
+                Vector2 potentialLocation = room.Location + dir;
+                if (!CheckIfRoomExists(potentialLocation))
                 {
-                    BossRoom.Location = randomLocation;
-                    DrawRoomOnMap(BossRoom);
+                    Room bossRoom = new Room
+                    {
+                        roomSprite = LevelSettings.BossRoomIcon,
+                        roomNumber = 1,
+                        Location = potentialLocation
+                    };
+                    DrawRoomOnMap(bossRoom);
                     return;
                 }
             }
         }
+
+        Debug.LogWarning("Failed to place Boss Room, placing randomly.");
     }
+
 
 
     void ShuffleList<T>(List<T> list)
