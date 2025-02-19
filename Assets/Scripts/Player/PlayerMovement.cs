@@ -28,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
     void PlayerMoving(float horizontalAxis, float verticalAxis)
     {
         // Luo liikevektori (ei muuta y-koordinaattia)
-        Vector3 move = new Vector3(horizontalAxis, 0, verticalAxis) * moveSpeed;
+        Vector3 move = new Vector3(horizontalAxis, 0, verticalAxis) * moveSpeed * Time.deltaTime;
 
         if (horizontalAxis != 0 || verticalAxis != 0)
         {
