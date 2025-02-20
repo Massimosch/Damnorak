@@ -7,6 +7,7 @@ public class KeyItem : Item
     {
         base.Use();
         Debug.Log($"{itemName} collected! Used to open doors.");
+        PlayerSettings.Keys++;
     }
 }
 

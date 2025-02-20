@@ -7,6 +7,9 @@ public static class PlayerSettings
     public static Transform transform;
     public static Animator animator;
     public static GameObject PlayerStaff;
+
+
+    public static int Keys = 0;
     public static float Speed = 0.1f;
     public static float Health = 20f;
     public static float MaxHealth = 20f;

@@ -2818,7 +2818,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8413766191070047802}
   - component: {fileID: 7874602846965913455}
-  - component: {fileID: 655868736310257667}
   - component: {fileID: 3118445662241644134}
   - component: {fileID: 7273181283244795385}
   m_Layer: 0
@@ -2836,7 +2835,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8388269629072313539}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.910913, z: -0, w: 0.41259855}
+  m_LocalRotation: {x: 0, y: -0.91091424, z: 0, w: 0.41259572}
   m_LocalPosition: {x: 8.647456, y: 0, z: 6.549181}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
@@ -2868,26 +2867,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &655868736310257667
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8388269629072313539}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8a3eae0e1d0cd844a920e4939ee2d3d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <MaxHealth>k__BackingField: 100
-  Target: {fileID: 0}
-  AttackDistance: 0
-  damageColor: {r: 1, g: 0, b: 0, a: 1}
-  flashDuration: 0.6
-  EnemyIdleBase: {fileID: 11400000, guid: 27eb0a3ff20b20f4fa129e898f557d8b, type: 2}
-  EnemyChaseBase: {fileID: 11400000, guid: de3c9e34456d4c94c89ad14df87089d9, type: 2}
-  EnemyAttackBase: {fileID: 11400000, guid: e5ebc293f70b99d47ad7350d77c3adc5, type: 2}
 --- !u!195 &3118445662241644134
 NavMeshAgent:
   m_ObjectHideFlags: 0

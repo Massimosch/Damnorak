@@ -102,7 +102,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
         material.SetColor("_EmissionColor", originalEmission);
     }
 
-    public void Die()
+    public virtual void Die()
     {
         Destroy(gameObject);
     }

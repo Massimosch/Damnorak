@@ -7,7 +7,7 @@ public static class LevelSettings
     public static float height = 500;
     public static float width = 500;
     public static float scale = 1f;
-    public static float iconScale = 0.07f;
+    public static float iconScale = 0.1f;
     public static float padding = 0.01f;
 
     public static float roomGenerationChance = 0.5f;
@@ -26,7 +26,7 @@ public static class LevelSettings
     public static List<Room> rooms = new List<Room>();
 
     public static float RoomChangeTimer = 1f;
-
+    internal static Vector2 SecretRoomLocation;
 }
 
 public class Room
