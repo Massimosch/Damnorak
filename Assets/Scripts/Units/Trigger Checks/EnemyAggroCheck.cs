@@ -18,6 +18,11 @@ public class EnemyAggroCheck : MonoBehaviour
         {
             _enemy.SetAggroStatus(true);
         }
+
+        if (_enemy is Boss boss)
+        {
+            boss.OnBossAggro();
+        }
     }
 
     void OnTriggerExit(Collider collider)

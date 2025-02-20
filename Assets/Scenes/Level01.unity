@@ -1156,6 +1156,7 @@ GameObject:
   - component: {fileID: 111035554}
   - component: {fileID: 111035556}
   - component: {fileID: 111035555}
+  - component: {fileID: 111035557}
   m_Layer: 5
   m_Name: BossHealthPanel
   m_TagString: Untagged
@@ -1222,6 +1223,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 111035553}
   m_CullTransparentMesh: 1
+--- !u!114 &111035557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 111035553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1b0c5f06df94dd4c822798dc6db22ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossNameText: {fileID: 309568023}
+  healthBar: {fileID: 1533992535}
 --- !u!1 &112528615
 GameObject:
   m_ObjectHideFlags: 0
@@ -21156,7 +21171,7 @@ MonoBehaviour:
   EnemyIdleBase: {fileID: 11400000, guid: 27eb0a3ff20b20f4fa129e898f557d8b, type: 2}
   EnemyChaseBase: {fileID: 11400000, guid: de3c9e34456d4c94c89ad14df87089d9, type: 2}
   EnemyAttackBase: {fileID: 11400000, guid: 6a6d2e7d99e5714458346f50308a6df8, type: 2}
-  bossName: Tormented Soul of Jailer
+  bossName: Tormented Soul of the Jailer
 --- !u!1 &1533992533
 GameObject:
   m_ObjectHideFlags: 0

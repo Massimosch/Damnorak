@@ -3,8 +3,6 @@ using UnityEngine;
 public class Boss : Enemy
 {
     [Header("Boss Specifics")]
-    //[SerializeField] private GameObject portalPrefab;
-    //[SerializeField] private Transform portalSpawnPoint;
     [SerializeField] private string bossName = "Tormented Soul of Jailer";
     private BossHealthUI bossHealthUI;
 
@@ -12,10 +10,22 @@ public class Boss : Enemy
     {
         base.Start();
 
+        // Find UI but don't activate it
         bossHealthUI = FindFirstObjectByType<BossHealthUI>();
         if (bossHealthUI != null)
         {
+            bossHealthUI.gameObject.SetActive(false);  // Ensure UI starts hidden
+        }
+    }
+
+    // Enable UI when aggroed
+    public void OnBossAggro()
+    {
+        if (bossHealthUI != null)
+        {
             bossHealthUI.SetupUI(this, bossName);
+            bossHealthUI.gameObject.SetActive(true);  // Activate UI on aggro
+            Debug.Log($"{bossName} has entered the battle!");
         }
     }
 
@@ -23,12 +33,11 @@ public class Boss : Enemy
     {
         base.Die();
         Debug.Log("Boss Defeated!");
-        /*
-        if (portalPrefab != null && portalSpawnPoint != null)
+
+        // Hide UI when boss dies
+        if (bossHealthUI != null)
         {
-            Instantiate(portalPrefab, portalSpawnPoint.position, Quaternion.identity);
+            bossHealthUI.gameObject.SetActive(false);
         }
-        */
     }
 }
-
