@@ -47,7 +47,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
         originalColor = enemyRenderer.material.color;
     }
 
-    void Start()
+    protected virtual void Start()
     {
         CurrentHealth = MaxHealth;
 

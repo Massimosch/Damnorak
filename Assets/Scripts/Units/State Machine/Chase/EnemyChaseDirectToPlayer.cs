@@ -25,7 +25,7 @@ public class EnemyChaseDirectToPlayer : EnemyChaseSOBase
         if (m_Distance <= m_Enemy.AttackDistance)
         {
             m_Agent.isStopped = true;
-            m_Enemy.StateMachine.ChangeState(m_Enemy.AttackState);  // Change to AttackState
+            m_Enemy.StateMachine.ChangeState(m_Enemy.AttackState);
             Debug.Log("Switching to Attack State.");
         }
         else
