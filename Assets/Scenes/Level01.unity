@@ -9042,7 +9042,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 125, y: 0}
+  m_AnchoredPosition: {x: 125, y: -115}
   m_SizeDelta: {x: 500, y: 125}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &672678073
@@ -21171,7 +21171,7 @@ MonoBehaviour:
   EnemyIdleBase: {fileID: 11400000, guid: 27eb0a3ff20b20f4fa129e898f557d8b, type: 2}
   EnemyChaseBase: {fileID: 11400000, guid: de3c9e34456d4c94c89ad14df87089d9, type: 2}
   EnemyAttackBase: {fileID: 11400000, guid: 6a6d2e7d99e5714458346f50308a6df8, type: 2}
-  bossName: Tormented Soul of the Jailer
+  bossName: Tormented Soul
 --- !u!1 &1533992533
 GameObject:
   m_ObjectHideFlags: 0
@@ -30815,6 +30815,10 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7874602846965913455, guid: a9b6716fabcea20409178c11041c934f, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 22100000, guid: da9fc74f1b67e3540b27be0deed945d2, type: 2}
     - target: {fileID: 8388269629072313539, guid: a9b6716fabcea20409178c11041c934f, type: 3}
       propertyPath: m_Name
       value: Tormented_Soul

@@ -5,8 +5,17 @@ public class BossAttackStraightProjectile : EnemyAttackSOBase
 {
     [SerializeField] private GameObject projectilePrefab;
     private Transform firePoint;
-    [SerializeField] private float fireRate = 1.5f;  // Adjusted for balance
+    [SerializeField] private float fireRate = 1.5f;
     private float nextFireTime;
+
+    public override void DoAnimationTriggerEventLogic(Enemy.AnimationTriggerType triggerType)
+    {
+        if (triggerType == Enemy.AnimationTriggerType.Attack)
+        {
+            FireProjectile();
+        }
+    }
+
 
     public override void DoFrameUpdateLogic()
     {
@@ -17,19 +26,25 @@ public class BossAttackStraightProjectile : EnemyAttackSOBase
 
         if (distanceToPlayer > enemy.AttackDistance)
         {
-            // Exit attack state and return to chase if player moves away
             Debug.Log("Player out of range. Switching back to Chase.");
             enemy.StateMachine.ChangeState(enemy.ChaseState);
             return;
         }
 
-        // Fire projectiles while in range
+        // Rotate the boss to face the player
+        Vector3 targetDirection = (enemy.Target.position - enemy.transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(targetDirection);
+        enemy.transform.rotation = Quaternion.Slerp(enemy.transform.rotation, lookRotation, Time.deltaTime * 5f);
+
+        // Trigger attack animation if ready to fire
         if (Time.time >= nextFireTime)
         {
-            FireProjectile();
+            enemy.Animator.SetTrigger("Attack"); // Ensure you have an "Attack" trigger in the Animator
             nextFireTime = Time.time + 1f / fireRate;
         }
     }
+
+
 
     private void FireProjectile()
     {

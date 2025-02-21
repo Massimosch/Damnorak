@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     public EnemyStateMachine StateMachine { get; set; }
     public EnemyChaseState ChaseState { get; set; }
     public EnemyAttackState AttackState { get; set; }
+    [SerializeField] public Animator Animator { get; set; }
     public bool IsAggroed { get; set; }
     public bool IsWithinStrikingDistance { get; set; }
     #endregion
@@ -34,6 +35,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
 
     void Awake()
     {
+        Animator = GetComponent<Animator>();
         EnemyIdleBaseInstance = Instantiate(EnemyIdleBase);
         EnemyChaseBaseInstance = Instantiate(EnemyChaseBase);
         EnemyAttackBaseInstance = Instantiate(EnemyAttackBase);
@@ -70,9 +72,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
 
     public void Damage(float damageAmount)
     {
-        Debug.Log($"Before Damage: {CurrentHealth}");
         CurrentHealth -= damageAmount;
-        Debug.Log($"After Damage: {CurrentHealth}");
 
         StartCoroutine(nameof(FlashRed));
         if (CurrentHealth <= 0)
@@ -127,6 +127,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     public enum AnimationTriggerType
     {
         EnemyDamaged,
-        PlayFootstepsounds
+        PlayFootstepsounds,
+        Attack
     }
 }

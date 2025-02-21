@@ -3,7 +3,7 @@ using UnityEngine;
 public class Boss : Enemy
 {
     [Header("Boss Specifics")]
-    [SerializeField] private string bossName = "Tormented Soul of Jailer";
+    [SerializeField] private string bossName = "";
     private BossHealthUI bossHealthUI;
 
     protected override void Start()
@@ -14,7 +14,7 @@ public class Boss : Enemy
         bossHealthUI = FindFirstObjectByType<BossHealthUI>();
         if (bossHealthUI != null)
         {
-            bossHealthUI.gameObject.SetActive(false);  // Ensure UI starts hidden
+            bossHealthUI.gameObject.SetActive(false);
         }
     }
 
@@ -24,7 +24,7 @@ public class Boss : Enemy
         if (bossHealthUI != null)
         {
             bossHealthUI.SetupUI(this, bossName);
-            bossHealthUI.gameObject.SetActive(true);  // Activate UI on aggro
+            bossHealthUI.gameObject.SetActive(true);
             Debug.Log($"{bossName} has entered the battle!");
         }
     }
