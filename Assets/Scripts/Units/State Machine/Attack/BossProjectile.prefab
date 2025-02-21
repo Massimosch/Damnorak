@@ -124,6 +124,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 50
   Damage: 4
+  hitSound: {fileID: 8300000, guid: eb0063f65c2e996a6aeda776c0d62df7, type: 3}
 --- !u!54 &3485805197624556379
 Rigidbody:
   m_ObjectHideFlags: 0
