@@ -27,6 +27,8 @@ public static class LevelSettings
 
     public static float RoomChangeTimer = 1f;
     internal static Vector2 SecretRoomLocation;
+
+    public static int EnemyCount = 0;
 }
 
 public class Room
@@ -38,4 +40,5 @@ public class Room
     public Sprite roomSprite;
     public bool revealedRoom;
     public bool exploredRoom;
+    public bool Cleared = true;
 }

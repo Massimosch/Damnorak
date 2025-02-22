@@ -75,7 +75,7 @@ public class ChangeRooms : MonoBehaviour
 
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (changeRoomCooldown || hit.gameObject.layer == LayerMask.NameToLayer("Floor"))
+        if (changeRoomCooldown || hit.gameObject.layer == LayerMask.NameToLayer("Floor") || PlayerSettings.currentRoom.Cleared != true)
         {
             return;
         }
@@ -186,6 +186,30 @@ public class ChangeRooms : MonoBehaviour
 
             RevealRooms(R);
             ReDrawRevealedRooms();
+
+            Transform Enemies = NewRoom.transform.Find("Enemies");
+            if ( Enemies != null)
+            {
+                PlayerSettings.currentRoom.Cleared = false;
+                LevelSettings.EnemyCount = Enemies.childCount;
+            }
+            else
+            {
+                LevelSettings.EnemyCount = 0;
+                Transform Doors = NewRoom.transform.Find("Doors");
+
+                Animator A;
+                Doors.Find("LeftDoor").TryGetComponent<Animator>(out A);
+                A.enabled = true;
+                Doors.Find("RightDoor").TryGetComponent<Animator>(out A);
+                A.enabled = true;
+                Doors.Find("TopDoor").TryGetComponent<Animator>(out A);
+                A.enabled = true;
+                Doors.Find("BottomDoor").TryGetComponent<Animator>(out A);
+                A.enabled = true;
+            }
+
+
         }
     }
 }
