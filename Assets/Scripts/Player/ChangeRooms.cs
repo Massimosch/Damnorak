@@ -159,36 +159,43 @@ public class ChangeRooms : MonoBehaviour
 
     void CheckDoor(Vector2 NewLocation, string Direction, Vector3 RoomOffset)
     {
-        //where are we
+        // Where are we currently?
         Vector2 Location = PlayerSettings.currentRoom.Location;
 
-        //where are we going
+        // Where are we going?
         Location += NewLocation;
 
         if (LevelSettings.rooms.Exists(x => x.Location == Location))
         {
             Room R = LevelSettings.rooms.First(x => x.Location == Location);
-            //disable the room that you were in
+
+            // Disable the room we're leaving
             Rooms.Find(PlayerSettings.currentRoom.roomNumber.ToString()).gameObject.SetActive(false);
-            //find the new room and activate it
+
+            // Activate the new room
             GameObject NewRoom = Rooms.Find(R.roomNumber.ToString()).gameObject;
             NewRoom.SetActive(true);
-            //move the player
+
+            // Move the player, always resetting Y-axis to 0
             PlayerSettings.Controller.enabled = false;
-            PlayerSettings.transform.position = NewRoom.transform.Find("Doors").transform.Find(Direction).position + RoomOffset;
+            Vector3 targetPosition = NewRoom.transform.Find("Doors").Find(Direction).position + RoomOffset;
+            targetPosition.y = 0;  // Ensure Y is always 0
+            PlayerSettings.transform.position = targetPosition;
             PlayerSettings.Controller.enabled = true;
 
+            // Update room and UI elements
             ChangeRoomIcon(PlayerSettings.currentRoom, R);
             PlayerSettings.currentRoom = R;
             EnableDoors(R);
-
             PlayerSettings.currentRoom.exploredRoom = true;
 
+            // Reveal nearby rooms
             RevealRooms(R);
             ReDrawRevealedRooms();
 
+            // Handle enemies in the new room
             Transform Enemies = NewRoom.transform.Find("Enemies");
-            if ( Enemies != null)
+            if (Enemies != null)
             {
                 PlayerSettings.currentRoom.Cleared = false;
                 LevelSettings.EnemyCount = Enemies.childCount;
@@ -196,20 +203,25 @@ public class ChangeRooms : MonoBehaviour
             else
             {
                 LevelSettings.EnemyCount = 0;
-                Transform Doors = NewRoom.transform.Find("Doors");
-
-                Animator A;
-                Doors.Find("LeftDoor").TryGetComponent<Animator>(out A);
-                A.enabled = true;
-                Doors.Find("RightDoor").TryGetComponent<Animator>(out A);
-                A.enabled = true;
-                Doors.Find("TopDoor").TryGetComponent<Animator>(out A);
-                A.enabled = true;
-                Doors.Find("BottomDoor").TryGetComponent<Animator>(out A);
-                A.enabled = true;
+                EnableDoorAnimations(NewRoom.transform.Find("Doors"));
             }
-
-
         }
     }
+
+
+    void EnableDoorAnimations(Transform doors)
+    {
+        Animator animator;
+        string[] doorNames = { "LeftDoor", "RightDoor", "TopDoor", "BottomDoor" };
+
+        foreach (string doorName in doorNames)
+        {
+            Transform door = doors.Find(doorName);
+            if (door != null && door.TryGetComponent(out animator))
+            {
+                animator.enabled = true;
+            }
+        }
+    }
+
 }
