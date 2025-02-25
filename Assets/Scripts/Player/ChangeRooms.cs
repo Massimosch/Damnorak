@@ -159,28 +159,32 @@ public class ChangeRooms : MonoBehaviour
 
     void CheckDoor(Vector2 NewLocation, string Direction, Vector3 RoomOffset)
     {
-        // Where are we currently?
         Vector2 Location = PlayerSettings.currentRoom.Location;
-
-        // Where are we going?
         Location += NewLocation;
 
         if (LevelSettings.rooms.Exists(x => x.Location == Location))
         {
             Room R = LevelSettings.rooms.First(x => x.Location == Location);
 
-            // Disable the room we're leaving
+            // Disable old room and activate new one
             Rooms.Find(PlayerSettings.currentRoom.roomNumber.ToString()).gameObject.SetActive(false);
-
-            // Activate the new room
             GameObject NewRoom = Rooms.Find(R.roomNumber.ToString()).gameObject;
             NewRoom.SetActive(true);
 
-            // Move the player, always resetting Y-axis to 0
+            // Move the player (no hardcoded Y)
             PlayerSettings.Controller.enabled = false;
-            Vector3 targetPosition = NewRoom.transform.Find("Doors").Find(Direction).position + RoomOffset;
-            targetPosition.y = 0;  // Ensure Y is always 0
-            PlayerSettings.transform.position = targetPosition;
+            Transform doorTransform = NewRoom.transform.Find($"Doors/{Direction}");
+
+            if (doorTransform != null)
+            {
+                PlayerSettings.transform.position = doorTransform.position + RoomOffset;
+                Debug.Log($"Player teleported to: {PlayerSettings.transform.position}");
+            }
+            else
+            {
+                Debug.LogWarning($"Door '{Direction}' not found in room {R.roomNumber}");
+            }
+
             PlayerSettings.Controller.enabled = true;
 
             // Update room and UI elements
@@ -189,24 +193,19 @@ public class ChangeRooms : MonoBehaviour
             EnableDoors(R);
             PlayerSettings.currentRoom.exploredRoom = true;
 
-            // Reveal nearby rooms
+            // Reveal nearby rooms and handle enemies
             RevealRooms(R);
             ReDrawRevealedRooms();
 
-            // Handle enemies in the new room
             Transform Enemies = NewRoom.transform.Find("Enemies");
-            if (Enemies != null)
-            {
-                PlayerSettings.currentRoom.Cleared = false;
-                LevelSettings.EnemyCount = Enemies.childCount;
-            }
-            else
-            {
-                LevelSettings.EnemyCount = 0;
-                EnableDoorAnimations(NewRoom.transform.Find("Doors"));
-            }
+            LevelSettings.EnemyCount = (Enemies != null) ? Enemies.childCount : 0;
+            PlayerSettings.currentRoom.Cleared = (LevelSettings.EnemyCount == 0);
+            EnableDoorAnimations(NewRoom.transform.Find("Doors"));
         }
     }
+
+
+
 
 
     void EnableDoorAnimations(Transform doors)
