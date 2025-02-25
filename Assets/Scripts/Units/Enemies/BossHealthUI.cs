@@ -6,14 +6,14 @@ public class BossHealthUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI bossNameText;
     [SerializeField] private Slider healthBar;
-    private Enemy boss;
+    private Boss boss;
 
-    public void SetupUI(Enemy boss, string bossName)
+    public void SetupUI(Boss boss, string bossName)
     {
         this.boss = boss;
         bossNameText.text = bossName;
         healthBar.maxValue = boss.MaxHealth;
-        healthBar.value = boss.MaxHealth;
+        healthBar.value = boss.CurrentHealth;
         gameObject.SetActive(true);
     }
 
@@ -30,3 +30,4 @@ public class BossHealthUI : MonoBehaviour
         }
     }
 }
+

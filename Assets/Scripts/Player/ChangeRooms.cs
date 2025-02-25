@@ -27,51 +27,49 @@ public class ChangeRooms : MonoBehaviour
         changeRoomCooldown = false;
     }
 
-    void EnableDoors(Room R)
+    public void EnableDoors(Room R)
     {
         Transform T = Rooms.Find(R.roomNumber.ToString());
         Transform Doors = T.Find("Doors");
 
-        for(int i = 0; i < Doors.childCount; i++)
+        for (int i = 0; i < Doors.childCount; i++)
         {
             Doors.GetChild(i).gameObject.SetActive(false);
+            if (Doors.GetChild(i).TryGetComponent(out Animator animator))
+            {
+                animator.SetBool("Open", false);
+            }
         }
 
-        //Chek what doors should be active
+        
+        if (PlayerSettings.currentRoom.Cleared)
+        {
+            Debug.Log($"Enemy count in room {R.roomNumber}: {LevelSettings.EnemyCount}");
+            Debug.Log($"Room Cleared Status: {PlayerSettings.currentRoom.Cleared}");
 
-        //Left
-        {
-            Vector2 NewPosition = R.Location + new Vector2(-1, 0);
-            if(LevelSettings.rooms.Exists(x => x.Location == NewPosition))
-            {
-                Doors.Find("LeftDoor").gameObject.SetActive(true);
-            }
+            OpenDoorIfExists(R.Location + new Vector2(-1, 0), "LeftDoor", Doors);
+            OpenDoorIfExists(R.Location + new Vector2(0, 1), "TopDoor", Doors);
+            OpenDoorIfExists(R.Location + new Vector2(0, -1), "BottomDoor", Doors);
+            OpenDoorIfExists(R.Location + new Vector2(1, 0), "RightDoor", Doors);
         }
-        //Up
+    }
+
+    void OpenDoorIfExists(Vector2 position, string doorName, Transform doors)
+    {
+        if (LevelSettings.rooms.Exists(x => x.Location == position))
         {
-            Vector2 NewPosition = R.Location + new Vector2(0, 1);
-            if(LevelSettings.rooms.Exists(x => x.Location == NewPosition))
+            Transform door = doors.Find(doorName);
+            if (door != null)
             {
-                Doors.Find("TopDoor").gameObject.SetActive(true);
-            }
-        }
-        //Down
-        {
-            Vector2 NewPosition = R.Location + new Vector2(0, -1);
-            if(LevelSettings.rooms.Exists(x => x.Location == NewPosition))
-            {
-                Doors.Find("BottomDoor").gameObject.SetActive(true);
-            }
-        }
-        //Right
-        {
-            Vector2 NewPosition = R.Location + new Vector2(1, 0);
-            if(LevelSettings.rooms.Exists(x => x.Location == NewPosition))
-            {
-                Doors.Find("RightDoor").gameObject.SetActive(true);
+                door.gameObject.SetActive(true);
+                if (door.TryGetComponent(out Animator animator))
+                {
+                    animator.SetBool("Open", true); // Only open if cleared
+                }
             }
         }
     }
+
 
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
@@ -157,7 +155,7 @@ public class ChangeRooms : MonoBehaviour
         }
     }
 
-    void CheckDoor(Vector2 NewLocation, string Direction, Vector3 RoomOffset)
+    public void CheckDoor(Vector2 NewLocation, string Direction, Vector3 RoomOffset)
     {
         Vector2 Location = PlayerSettings.currentRoom.Location;
         Location += NewLocation;
@@ -171,18 +169,12 @@ public class ChangeRooms : MonoBehaviour
             GameObject NewRoom = Rooms.Find(R.roomNumber.ToString()).gameObject;
             NewRoom.SetActive(true);
 
-            // Move the player (no hardcoded Y)
             PlayerSettings.Controller.enabled = false;
             Transform doorTransform = NewRoom.transform.Find($"Doors/{Direction}");
 
             if (doorTransform != null)
             {
                 PlayerSettings.transform.position = doorTransform.position + RoomOffset;
-                Debug.Log($"Player teleported to: {PlayerSettings.transform.position}");
-            }
-            else
-            {
-                Debug.LogWarning($"Door '{Direction}' not found in room {R.roomNumber}");
             }
 
             PlayerSettings.Controller.enabled = true;
@@ -200,25 +192,36 @@ public class ChangeRooms : MonoBehaviour
             Transform Enemies = NewRoom.transform.Find("Enemies");
             LevelSettings.EnemyCount = (Enemies != null) ? Enemies.childCount : 0;
             PlayerSettings.currentRoom.Cleared = (LevelSettings.EnemyCount == 0);
+            if (Enemies != null)
+            {
+                Debug.Log($"Found Enemies object in {NewRoom.name}. Child count: {Enemies.childCount}");
+                foreach (Transform enemy in Enemies)
+                {
+                    Debug.Log($"Enemy: {enemy.name}, Active: {enemy.gameObject.activeInHierarchy}");
+                }
+            }
+            else
+            {
+                Debug.Log("Enemies object not found!");
+            }
+
+
+
+            // Update door animations based on enemy count
             EnableDoorAnimations(NewRoom.transform.Find("Doors"));
         }
     }
 
-
-
-
-
-    void EnableDoorAnimations(Transform doors)
+    public void EnableDoorAnimations(Transform doors)
     {
-        Animator animator;
         string[] doorNames = { "LeftDoor", "RightDoor", "TopDoor", "BottomDoor" };
 
         foreach (string doorName in doorNames)
         {
             Transform door = doors.Find(doorName);
-            if (door != null && door.TryGetComponent(out animator))
+            if (door != null && door.TryGetComponent(out Animator animator))
             {
-                animator.enabled = true;
+                animator.SetBool("Open", PlayerSettings.currentRoom.Cleared);
             }
         }
     }

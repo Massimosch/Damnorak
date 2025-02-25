@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckable
 {
@@ -104,8 +105,24 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
 
     public virtual void Die()
     {
+        LevelSettings.EnemyCount--;
+        if (LevelSettings.EnemyCount <= 0)
+        {
+            PlayerSettings.currentRoom.Cleared = true;
+
+            // Find the player by tag and get ChangeRooms component
+            GameObject player = GameObject.FindWithTag("Player");
+            if (player != null && player.TryGetComponent<ChangeRooms>(out var changeRooms))
+            {
+                changeRooms.EnableDoors(PlayerSettings.currentRoom);
+                changeRooms.EnableDoorAnimations(changeRooms.Rooms.Find(PlayerSettings.currentRoom.roomNumber.ToString()).Find("Doors"));
+            }
+        }
         Destroy(gameObject);
     }
+
+
+
 
     private void AnimationTriggerEvent(AnimationTriggerType triggetType)
     {
