@@ -8,7 +8,7 @@ public class Projectile : MonoBehaviour
 
     void Start()
     {
-        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource = gameObject.GetComponent<AudioSource>();
     }
 
     void OnCollisionEnter(Collision collision)

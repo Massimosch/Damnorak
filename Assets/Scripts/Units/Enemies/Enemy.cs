@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
     private Color originalColor;
     [SerializeField] private Color damageColor = Color.red;
     [SerializeField] private float flashDuration = 0.2f;
+    
 
     #region StateMachine Variables
     public EnemyIdleState IdleState { get; set;}
@@ -71,7 +72,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMoveable, ITriggerCheckab
         StateMachine.CurrentEnemyState.PhysicsUpdate();
     }
 
-    public void Damage(float damageAmount)
+    public virtual void Damage(float damageAmount)
     {
         CurrentHealth -= damageAmount;
 

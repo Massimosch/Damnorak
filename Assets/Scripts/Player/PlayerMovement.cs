@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -17,6 +18,11 @@ public class PlayerMovement : MonoBehaviour
         verticalAxis = Input.GetAxisRaw("Vertical");
         PlayerMoving(horizontalAxis, verticalAxis);
         PlayerRotating();
+        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene(0);
+        }
     }
 
     void LateUpdate()
@@ -27,7 +33,6 @@ public class PlayerMovement : MonoBehaviour
 
     void PlayerMoving(float horizontalAxis, float verticalAxis)
     {
-        // Luo liikevektori (ei muuta y-koordinaattia)
         Vector3 move = new Vector3(horizontalAxis, 0, verticalAxis) * moveSpeed * Time.deltaTime;
 
         if (horizontalAxis != 0 || verticalAxis != 0)
@@ -39,10 +44,8 @@ public class PlayerMovement : MonoBehaviour
             PlayerSettings.animator.SetFloat("Speed", 0);
         }
 
-        // Pakotetaan y-koordinaatti pysymään nollassa
         move.y = 0f;
 
-        // Liikuta pelaajaa
         controller.Move(move);
     }
 
@@ -63,8 +66,8 @@ public class PlayerMovement : MonoBehaviour
 
     void CamMovement()
     {
-        Vector3 startPosition = transform.position + new Vector3(0, 69, 0); //Cam start Pos
-        Vector3 updatedPosition = Vector3.MoveTowards(PlayerSettings.playerCamera.transform.position, startPosition, camSpeed * Time.deltaTime); //Cam Follow Speed
+        Vector3 startPosition = transform.position + new Vector3(0, 69, 0);
+        Vector3 updatedPosition = Vector3.MoveTowards(PlayerSettings.playerCamera.transform.position, startPosition, camSpeed * Time.deltaTime);
         PlayerSettings.playerCamera.transform.position = updatedPosition;
     }
 }
