@@ -2889,7 +2889,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <MaxHealth>k__BackingField: 30
   Target: {fileID: 0}
-  AttackDistance: 5
+  AttackDistance: 10
   damageColor: {r: 1, g: 0, b: 0, a: 1}
   flashDuration: 0.2
   EnemyIdleBase: {fileID: 11400000, guid: 27eb0a3ff20b20f4fa129e898f557d8b, type: 2}
