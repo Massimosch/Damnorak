@@ -6,6 +6,9 @@ public class Boss : Enemy
     [SerializeField] private string bossName = "Boss";
     [SerializeField] private BossHealthUI bossHealthUI;
 
+    [Header("Portal Activation")]
+    [SerializeField] private GameObject portalObject;  // Assign an existing portal in the scene
+
     protected override void Start()
     {
         base.Start();
@@ -19,6 +22,12 @@ public class Boss : Enemy
         if (bossHealthUI != null)
         {
             bossHealthUI.gameObject.SetActive(false);
+        }
+
+        // Ensure the portal is initially deactivated
+        if (portalObject != null)
+        {
+            portalObject.SetActive(false);
         }
     }
 
@@ -45,5 +54,21 @@ public class Boss : Enemy
         }
 
         Debug.Log($"{bossName} defeated!");
+
+        // Activate the portal instead of instantiating it
+        ActivatePortal();
+    }
+
+    private void ActivatePortal()
+    {
+        if (portalObject != null)
+        {
+            portalObject.SetActive(true);
+            Debug.Log("Portal activated!");
+        }
+        else
+        {
+            Debug.LogError("Portal object not assigned!");
+        }
     }
 }

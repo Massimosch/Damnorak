@@ -9,10 +9,11 @@ public static class PlayerSettings
     public static GameObject PlayerStaff;
 
 
-    public static int Keys = 0;
+    public static int Keys = 3;
+    public static int Crystals = 5;
     public static float Speed = 0.1f;
-    public static float Health = 20f;
-    public static float MaxHealth = 20f;
+    public static float Health = 3f;
+    public static float MaxHealth = 3f;
     public static float AttackSpeed = 30;
 
     public static GameObject Attack;

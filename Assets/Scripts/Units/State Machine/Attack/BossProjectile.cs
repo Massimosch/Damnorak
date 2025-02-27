@@ -4,7 +4,10 @@ public class BossProjectile : MonoBehaviour
 {
     public float Speed = 10f;
     public float Damage = 1f;
-    public AudioClip hitSound; // Assign this in the inspector
+
+    [Header("Audio Clips")]
+    public AudioClip fireSound; 
+    public AudioClip hitSound;   
 
     private Vector3 moveDirection;
     private AudioSource audioSource;
@@ -16,15 +19,18 @@ public class BossProjectile : MonoBehaviour
 
     void Start()
     {
-        // Add an AudioSource to the projectile if not already there
         audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.playOnAwake = false;
-        audioSource.clip = hitSound;
+        audioSource.pitch = 1.4f;
+
+        if (fireSound != null)
+        {
+            audioSource.PlayOneShot(fireSound, 0.3f);
+        }
     }
 
     void Update()
     {
-        // Move in the aimed direction
         transform.position += moveDirection * Speed * Time.deltaTime;
     }
 
