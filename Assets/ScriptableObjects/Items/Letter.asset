@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f240bb51a64f102448155cdbe71c7798, type: 3}
+  m_Name: Letter
+  m_EditorClassIdentifier: 
+  itemName: LorePart_1
+  icon: {fileID: 0}
+  maxStack: 99
+  letterContent: Brave wizard you have come far, but the dark dungeon is treacherous.
+    Trust your instincts and remember the magic lies within your hands. Forge ahead
+    and let the instincts guide you!
+  letterAudio: {fileID: 8300000, guid: 9e5429f7dbc9bde438a2d813231f575a, type: 3}

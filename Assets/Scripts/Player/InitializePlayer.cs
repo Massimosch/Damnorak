@@ -16,6 +16,7 @@ public class InitializePlayer : MonoBehaviour
     public GameObject HealthPanel;
     public GameObject DamagePanel;
     public RuntimeAnimatorController HeartAnimatorController;
+    public GameObject GameOverPanel;
 
     void Start()
     {
@@ -29,12 +30,11 @@ public class InitializePlayer : MonoBehaviour
         PlayerSettings.EmptyHeart = EmptyHeart;
         PlayerSettings.HalfHeart = HalfHeart;
         PlayerSettings.DamagePanel = DamagePanel;
+        PlayerSettings.GameOverPanel = GameOverPanel;
         PlayerSettings.HeartPanel = HealthPanel;
         PlayerSettings.HeartAnimator = HeartAnimatorController;
 
 
         LevelSettings.SecretRoomExplosion = SecretRoomExplosion;
-        
     }
-
 }

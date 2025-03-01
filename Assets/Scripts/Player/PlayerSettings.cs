@@ -12,8 +12,8 @@ public static class PlayerSettings
     public static int Keys = 3;
     public static int Crystals = 5;
     public static float Speed = 0.1f;
-    public static float Health = 3f;
-    public static float MaxHealth = 3f;
+    public static float Health = 5f;
+    public static float MaxHealth = 5f;
     public static float AttackSpeed = 30;
 
     public static GameObject Attack;
@@ -26,6 +26,7 @@ public static class PlayerSettings
 
     public static GameObject HeartPanel;
     public static GameObject DamagePanel;
+    public static GameObject GameOverPanel;
     public static Sprite FullHeart;
     public static Sprite HalfHeart;
     public static Sprite EmptyHeart;

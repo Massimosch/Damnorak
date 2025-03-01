@@ -14,30 +14,6 @@ public class HealthScript : MonoBehaviour
         DrawHearts();
     }
 
-    void Update()
-    {
-        if(Input.GetKey(KeyCode.I))
-        {
-            TakeDamage(1);
-        }
-
-        if(Input.GetKey(KeyCode.O))
-        {
-            TakeDamage(2);
-        }  
-
-        if(Input.GetKey(KeyCode.P))
-        {
-            TakeDamage(3);
-        }  
-
-        if(Input.GetKey(KeyCode.H))
-        {
-            PlayerSettings.Health = PlayerSettings.MaxHealth;
-            DrawHearts();
-        }     
-    }
-
     public static IEnumerator WaitAndReDrawHearts()
     {
         PlayerSettings.DamagePanel.SetActive(true);
@@ -73,8 +49,9 @@ public class HealthScript : MonoBehaviour
         Destroy(PlayerSettings.transform.GetComponent<PlayerMovement>());
         Destroy(PlayerSettings.transform.GetComponent<PlayerAttack>());
         Destroy(PlayerSettings.transform.GetComponent<ChangeRooms>());
-        //Destroy(PlayerSettings.transform.GetComponent<BombScript>());
         PlayerSettings.DamagePanel.SetActive(false);
+        PlayerSettings.GameOverPanel.SetActive(true);
+        Time.timeScale = 0f;
     }
 
     public static void TakeDamage(float damage)
@@ -83,16 +60,22 @@ public class HealthScript : MonoBehaviour
         {
             PlayerSettings.Invincible = true;
             CoroutineManager.Instance.StartCoroutine(Uninvincible());
-            for(int i = 1; i <= damage; ++i)
+
+            for (int i = 1; i <= damage; ++i)
             {
-                Instantiate(PlayerSettings.HeartPanel.transform.GetChild((int)PlayerSettings.Health - i), 
-                PlayerSettings.HeartPanel.transform).GetComponent<Animator>().Play("HeartAnimation");
-                PlayerSettings.HeartPanel.transform.GetChild((int)PlayerSettings.Health - i).GetComponent<Image>().sprite = PlayerSettings.EmptyHeart;
+                int heartIndex = (int)PlayerSettings.Health - i;
+
+                if (heartIndex >= 0 && heartIndex < PlayerSettings.HeartPanel.transform.childCount)
+                {
+                    Transform heart = PlayerSettings.HeartPanel.transform.GetChild(heartIndex);
+                    Instantiate(heart, PlayerSettings.HeartPanel.transform).GetComponent<Animator>().Play("HeartAnimation");
+                    heart.GetComponent<Image>().sprite = PlayerSettings.EmptyHeart;
+                }
             }
 
             PlayerSettings.Health -= damage;
 
-            if(PlayerSettings.Health <= 0)
+            if (PlayerSettings.Health <= 0)
             {
                 CoroutineManager.Instance.StartCoroutine(Die());
             }
@@ -102,6 +85,7 @@ public class HealthScript : MonoBehaviour
             }
         }
     }
+
     public static void DrawHeart(Sprite Type, int num)
     {
         GameObject Heart = new GameObject("Heart");
