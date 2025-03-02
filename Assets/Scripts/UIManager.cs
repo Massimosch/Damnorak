@@ -71,7 +71,6 @@ public class UIManager : MonoBehaviour
             letterPanel.SetActive(true);
         }
 
-        // Play audio if available
         if (audioClip != null && audioSource != null)
         {
             audioSource.clip = audioClip;

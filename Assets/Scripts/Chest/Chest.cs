@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Chest : MonoBehaviour
@@ -36,11 +37,23 @@ public class Chest : MonoBehaviour
         Debug.Log($"Spawned: {selectedItemPrefab.name}");
     }
 
-    void OnTriggerStay(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && Input.GetKeyDown(KeyCode.E))
+        if (other.CompareTag("Player"))
         {
-            OpenChest();
+            StartCoroutine(WaitForOpen());
+        }
+    }
+
+    private IEnumerator WaitForOpen()
+    {
+        while (!isOpened)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                OpenChest();
+            }
+            yield return null;
         }
     }
 }
